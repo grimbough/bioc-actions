@@ -18,6 +18,7 @@ runs:
       Ncpus: 2
       use-public-rspm: true
   - run: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc -o ${HOME}/.Renviron
+    shell: bash
   - run: |
       install.packages(c("BiocManager", "remotes"))
       BiocManager::install(version = ${{ steps.find-r-version.outputs.r-version }} )
