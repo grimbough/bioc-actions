@@ -7,7 +7,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - run: "${{ github.action_path }}"/bioc-to-r-map.sh 3.15
+  - run: ${{ github.action_path }}/bioc-to-r-map.sh 3.15
     shell: bash
   - id: find-r-version
     run: |
