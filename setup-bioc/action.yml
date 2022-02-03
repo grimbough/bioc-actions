@@ -22,11 +22,9 @@ runs:
       Ncpus: 2
       use-public-rspm: true
   - name: Download Renviron.bioc
-    uses: carlosperate/download-file-action@v1
-    with: 
-      file-url: https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc
-      file-name: .Renviron
-      location: "${HOME}"
+    run: |
+      download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
+    shell: Rscript {0}
   - run: cat ${HOME}/.Renviron
     shell: bash  
   - name: Setting Bioconductor mirror
