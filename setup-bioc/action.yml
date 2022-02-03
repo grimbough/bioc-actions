@@ -17,11 +17,11 @@ runs:
       r-version: ${{ steps.find-r-version.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
-  - run: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc -o ${HOME}/.Renviron
+  - run: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc -O ${HOME}/.Renviron
     shell: bash
   - run: |
       install.packages(c("BiocManager", "remotes"))
-      BiocManager::install(version = ${{ steps.find-r-version.outputs.r-version }} )
+      BiocManager::install(version = "${{ inputs.bioc-version }}" )
     shell: Rscript {0}
   - run: |
       Sys.getenv()
