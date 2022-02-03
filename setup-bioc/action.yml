@@ -21,14 +21,14 @@ runs:
       r-version: ${{ steps.find-r-version.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
-  - name: Download Renviron.bioc
+  - name: Download Renviron
     run: |
       download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
     shell: Rscript {0}
   - name: Setting Bioconductor mirror
     run: |
       writeLines('options(BioC_mirror = \'${{ inputs.bioc-mirror }}\')', con = '~/.Rprofile')
-    shell: Rcript {0}
+    shell: Rscript {0}
   - name: Install and initialize BiocManager
     run: |
       install.packages(c("BiocManager", "remotes"))
