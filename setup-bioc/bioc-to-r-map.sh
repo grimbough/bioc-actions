@@ -2,7 +2,10 @@ BIOC=$1
 
 case ${BIOC} in
   devel)
-    echo '4.2'
+    echo 'devel'
+    ;;
+  release)
+    echo 'release'
     ;;
   3.15)
     echo '4.2'
