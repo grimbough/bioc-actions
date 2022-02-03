@@ -27,9 +27,9 @@ runs:
     shell: Rscript {0}
   - name: Setting Bioconductor mirror
     run: |
-      echo "options(BioC_mirror = '${{ inputs.bioc-mirror }}')" >> ${HOME}/.Rprofile
-    shell: bash
-  - name: Installing and initialize BiocManager
+      writeLines('options(BioC_mirror = \'${{ inputs.bioc-mirror }}\')', con = '~/.Rprofile')
+    shell: Rcript {0}
+  - name: Install and initialize BiocManager
     run: |
       install.packages(c("BiocManager", "remotes"))
       BiocManager::install(version = "${{ inputs.bioc-version }}" )
