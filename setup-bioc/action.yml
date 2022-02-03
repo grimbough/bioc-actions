@@ -28,6 +28,7 @@ runs:
       location: ${HOME}
   - run: |
       echo "options(BioC_mirror = '${{ inputs.bioc-mirror }}')" >> ${HOME}/.Rprofile
+    shell: bash
   - run: |
       install.packages(c("BiocManager", "remotes"))
       BiocManager::install(version = "${{ inputs.bioc-version }}" )
