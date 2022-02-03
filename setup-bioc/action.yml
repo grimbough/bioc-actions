@@ -23,7 +23,7 @@ runs:
       use-public-rspm: true
   - uses: carlosperate/download-file-action@v1
     with: 
-      file-url:: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc
+      file-url: https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc
       file-name: .Renviron
       location: ${HOME}
   - run: |
