@@ -4,6 +4,10 @@ inputs:
     description: 'Version of Bioconductor'
     required: true
     default: 'devel'
+  bioc-mirror:
+    description: ''
+    required: false
+    default: 'https://www.bioconductor.org'
 runs:
   using: "composite"
   steps:
@@ -17,8 +21,13 @@ runs:
       r-version: ${{ steps.find-r-version.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
-  - run: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc -O ${HOME}/.Renviron
-    shell: bash
+  - uses: carlosperate/download-file-action@v1
+    with: 
+      file-url:: wget https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc
+      file-name: .Renviron
+      location: ${HOME}
+  - run: |
+      echo "options(BioC_mirror = '${{ inputs.bioc-mirror }}')" >> ${HOME}/.Rprofile
   - run: |
       install.packages(c("BiocManager", "remotes"))
       BiocManager::install(version = "${{ inputs.bioc-version }}" )
