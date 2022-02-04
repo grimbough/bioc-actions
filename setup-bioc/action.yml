@@ -27,9 +27,7 @@ runs:
     shell: Rscript {0}
   - name: Setting Bioconductor mirror
     run: |
-      if(file.exists('~/.Rprofile')) { lines <- readLines('~/.Rprofile')  } else { lines <- NULL }
-      print(lines)
-      writeLines(c(lines, 'options(BioC_mirror = "${{ inputs.bioc-mirror }}")'), con = '~/.Rprofile')
+      write('options(BioC_mirror = "${{ inputs.bioc-mirror }}")', file = '~/.Rprofile', append = TRUE)
     shell: Rscript {0}
   - name: Install and initialize BiocManager
     run: |
