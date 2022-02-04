@@ -11,6 +11,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install system dependencies
+      if: runner.os = "Linux"
+      run: sudo apt-get install libcurl4-openssl-dev
     - run: |
         BiocManager::install('BiocCheck')
       shell: Rscript {0}
@@ -18,5 +21,5 @@ runs:
         args <- strsplit("${{ inputs.arguments }}", "[[:space:],]+")[[1]]
         args_list <- as.list(rep(TRUE, length(args)))
         names(args_list) <- gsub(x = args, pattern = "--", replacement = "", fixed = TRUE)
-        BiocCheck::BiocCheck(package = ${{ inputs.working-directory }}, args_list)
+        BiocCheck::BiocCheck(package = "${{ inputs.working-directory }}", args_list)
       shell: Rscript {0}
