@@ -1,0 +1,22 @@
+name: 'Run BiocCheck'
+inputs:
+  working-directory:
+    description: 'Specify the location of the package to check if it is not in the working directory.'
+    required: false
+    default: '.'
+  arguments:
+    description: 'Arguements provided to BiocCheck() to disable specific tests.'
+    required: false
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        BiocManager::install('BiocCheck')
+      shell: Rscript {0}
+    - run: |
+        args <- strsplit("${{ inputs.arguments }}", "[[:space:],]+")[[1]]
+        args_list <- as.list(rep(TRUE, length(args)))
+        names(args_list) <- gsub(x = args, pattern = "--", replacement = "", fixed = TRUE)
+        BiocCheck::BiocCheck(package = ${{ inputs.working-directory }}, args_list)
+      shell: Rscript {0}
