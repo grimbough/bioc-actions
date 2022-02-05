@@ -16,7 +16,7 @@ runs:
       run: sudo apt-get install libcurl4-openssl-dev
       shell: bash
     - run: |
-        BiocManager::install('grimbough/BiocCheck')
+        BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
         args <- strsplit("${{ inputs.arguments }}", "[[:space:],]+")[[1]]
