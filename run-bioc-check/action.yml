@@ -22,5 +22,6 @@ runs:
         args <- strsplit("${{ inputs.arguments }}", "[[:space:],]+")[[1]]
         args_list <- as.list(rep(TRUE, length(args)))
         names(args_list) <- gsub(x = args, pattern = "--", replacement = "", fixed = TRUE)
-        BiocCheck::BiocCheck(package = "${{ inputs.working-directory }}", args_list)
+        check_results <- BiocCheck::BiocCheck(package = "${{ inputs.working-directory }}", args_list)
+        quit(save = "no", status = length(check_results$error))  
       shell: Rscript {0}
