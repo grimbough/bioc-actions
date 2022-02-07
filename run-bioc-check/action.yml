@@ -5,7 +5,7 @@ inputs:
     required: false
     default: '.'
   arguments:
-    description: 'Arguements provided to BiocCheck() to disable specific tests.'
+    description: 'Arguments provided to BiocCheck() to disable specific tests.'
     required: false
     default: ''
 runs:
@@ -19,9 +19,5 @@ runs:
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
-        args <- strsplit("${{ inputs.arguments }}", "[[:space:],]+")[[1]]
-        args_list <- as.list(rep(TRUE, length(args)))
-        names(args_list) <- gsub(x = args, pattern = "--", replacement = "", fixed = TRUE)
-        check_results <- BiocCheck::BiocCheck(package = "${{ inputs.working-directory }}", args_list)
-        quit(save = "no", status = length(check_results$error))  
-      shell: Rscript {0}
+        "${{ github.action_path }}"/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.arguments }}"
+      shell: Rscript
