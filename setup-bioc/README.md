@@ -1,8 +1,6 @@
-# setup-bioc
+# Setup R & Bioconductor
 
-![Workflow To Test Action](https://github.com/carlosperate/download-file-action/workflows/Workflow%20To%20Test%20Action/badge.svg)
-
-GitHub Action to install the appropriate version of R for a given version of Bioconductor
+GitHub Action to install the appropriate version of R for a given version of Bioconductor.
 
 ## Inputs
 
@@ -10,8 +8,6 @@ GitHub Action to install the appropriate version of R for a given version of Bio
 - `bioc-mirror`: (*Optional*) The mirror to download Bioconductor packages from.  If this option is no supplied then `https://www.bioconductor.org` will be used.
 
 ## Example usage
-
-In its simplest form you can you indicate what file to download and use it:
 
 ```yaml
 - name: Setup R and Bioconductor
