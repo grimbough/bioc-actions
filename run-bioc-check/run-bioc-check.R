@@ -5,8 +5,10 @@ if (length(input_arguments) < 3) {
 } else {
   dir <- input_arguments[1]
   error_on <- input_arguments[2]
-  bioccheck_args <- strsplit(tail(input_arguments, -2), "[[:space:],]+")[[1]]
+  bioccheck_args <- unlist(strsplit(tail(input_arguments, -2), "[[:space:],]+"))
 }
+
+print(bioccheck_args)
 
 if(!error_on %in% c("error", "warning", "note", "never")) {
   message("error on argument should be one of: 'error', 'warning', 'note', 'never'")
