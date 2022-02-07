@@ -20,4 +20,4 @@ runs:
       shell: Rscript {0}
     - run: |
         "${{ github.action_path }}"/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.arguments }}"
-      shell: Rscript
+      shell: Rscript {0}
