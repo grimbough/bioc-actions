@@ -1,21 +1,8 @@
 # Run BiocCheck
 
-GitHub Action to test an R package using [BiocCheck](https://bioconductor.org/packages/release/bioc/html/BiocCheck.html).
+GitHub Action to test an R package using [BiocCheck](https://bioconductor.org/packages/BiocCheck/).
 
-## Inputs
-
-working-directory:
-    description: 'Specify the location of the package to check if it is not in the working directory.'
-    required: false
-    default: '.'
-  error-on:
-    description: 'Specify the level of issue that should cause the action to fail.'
-    required: false
-    default: 'error'
-  arguments:
-    description: 'Arguments provided to BiocCheck() to disable specific tests.'
-    required: false
-    default: ''
+The Bioconductor project has some extra checks in addition to the usual `R CMD check` that must be passed as part of the package submission process.  This action allows the `BiocCheck()` function to be deployed on a specified package folder.
 
 ## Inputs
 
