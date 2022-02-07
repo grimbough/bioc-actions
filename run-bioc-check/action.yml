@@ -4,6 +4,10 @@ inputs:
     description: 'Specify the location of the package to check if it is not in the working directory.'
     required: false
     default: '.'
+  error-on:
+    description: 'Specify the level of issue that should cause the action to fail.'
+    required: false
+    default: 'error'
   arguments:
     description: 'Arguments provided to BiocCheck() to disable specific tests.'
     required: false
@@ -19,5 +23,5 @@ runs:
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
-        Rscript --vanilla ${{ github.action_path }}/run-bioc-check.R ${{ inputs.working-directory }} ${{ inputs.arguments }}
+        Rscript --vanilla "${{ github.action_path }}"/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
       shell: bash
