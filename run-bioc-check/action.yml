@@ -13,11 +13,11 @@ runs:
   steps:
     - name: Install system dependencies
       if: runner.os == 'Linux'
-      run: sudo apt-get install libcurl4-openssl-dev
+      run: sudo apt-get -y --quiet install libcurl4-openssl-dev
       shell: bash
     - run: |
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
-        --vanilla ${{ github.action_path }}/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.arguments }}"
-      shell: Rscript {0}
+        Rscript --vanilla ${{ github.action_path }}/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.arguments }}"
+      shell: bash
