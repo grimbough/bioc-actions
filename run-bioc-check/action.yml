@@ -17,7 +17,7 @@ runs:
   steps:
     - name: Install system dependencies
       if: runner.os == 'Linux'
-      run: sudo apt-get -y --quiet install libcurl4-openssl-dev
+      run: sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
     - run: |
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
