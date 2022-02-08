@@ -23,5 +23,5 @@ runs:
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
-        Rscript --vanilla "${{ github.action_path }}"/run-bioc-check.R "${{ inputs.working-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
+        Rscript --vanilla "${{ github.action_path }}/run-bioc-check.R" "${{ inputs.working-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
       shell: bash
