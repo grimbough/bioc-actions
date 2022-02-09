@@ -18,6 +18,7 @@ runs:
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
       mkdir -p ${HOME}/tmp-lib
+    shell: bash
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.pkg-dir }}
