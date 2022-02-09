@@ -1,0 +1,23 @@
+name: 'Build, Check, and Install'
+inputs:
+  working-directory:
+    description: '.'
+    required: false
+    default: '.'
+
+runs:
+  using: "composite"
+  steps:
+    id: build-package
+    run: |
+      PACKAGE_DIR=${PWD##*/}
+      cd ../
+      R CMD build --keep-empty-dirs --no-resave-data ${PACKAGE_DIR}
+      echo "::set-output name=pkg-tarball::$(echo ${PACKAGE_DIR}*.tar.gz)"
+    shell: bash
+    id: check-package
+    run: |
+      PACKAGE_DIR=${PWD##*/}
+      cd ../
+      R CMD check --install=check:${PACKAGE_DIR}.install-out.txt --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
+    shell: bash
