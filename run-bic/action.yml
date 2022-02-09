@@ -16,6 +16,7 @@ runs:
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
       else
         echo "Option 2"
+        echo "${PWD}"
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
@@ -26,6 +27,7 @@ runs:
       echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.pkg-dir }}*.tar.gz)"
     shell: bash
     working-directory: ${{ steps.find-working-dir.working-dir }}
+    #working-directory: ${{ steps.find-working-dir.working-dir }}
   - id: check-package
     run: |
       R CMD check --install=check:${{ steps.find-working-dir.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
