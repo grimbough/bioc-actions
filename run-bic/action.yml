@@ -10,14 +10,15 @@ runs:
   steps:
   - id: find-working-dir
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]; then
+      if [[ ${{ inputs.package-directory }} == "." ]]; then#
+        echo "Option 1"
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
       else
+        echo "Option 2"
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
-      mkdir -p ${HOME}/tmp-lib
     shell: bash
   - id: build-package
     run: |
@@ -27,6 +28,6 @@ runs:
     working-directory: ${{ steps.find-working-dir.working-dir }}
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.pkg-dir }}.install-out.txt --library=${HOME}/tmp-lib --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
+      R CMD check --install=check:${{ steps.find-working-dir.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
     shell: bash
     working-directory: ${{ steps.find-working-dir.working-dir }}
