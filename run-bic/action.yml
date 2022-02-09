@@ -23,13 +23,12 @@ runs:
     shell: bash
   - id: build-package
     run: |
-      R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.pkg-dir }}
-      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.pkg-dir }}*.tar.gz)"
+      R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
+      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-dir }}*.tar.gz)"
     shell: bash
-    working-directory: ${{ steps.find-working-dir.working-dir }}
-    #working-directory: ${{ steps.find-working-dir.working-dir }}
+    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
     shell: bash
     working-directory: ${{ steps.find-working-dir.working-dir }}
