@@ -10,7 +10,7 @@ runs:
   steps:
   - id: build-package
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]
+      if [[ ${{ inputs.package-directory }} == "." ]]; then
         PACKAGE_DIR=${PWD##*/}
         cd ../
       else 
@@ -21,7 +21,7 @@ runs:
     shell: bash
   - id: check-package
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]
+      if [[ ${{ inputs.package-directory }} == "." ]]; then
         PACKAGE_DIR=${PWD##*/}
         cd ../
       else 
