@@ -11,12 +11,9 @@ runs:
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
-        echo "Option 1"
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
       else
-        echo "Option 2"
-        echo "${PWD}"
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
@@ -29,6 +26,6 @@ runs:
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.working-dir }}
