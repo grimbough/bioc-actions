@@ -8,24 +8,24 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - id: find-working-dir
+    run: |
+      if [[ ${{ inputs.package-directory }} == "." ]]; then
+        echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
+        echo "::set-output name=working-dir::$(echo ${PWD%/*})"
+      else
+        echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
+        echo "::set-output name=working-dir::$(echo ${PWD})"
+      fi
+      mkdir -p ${HOME}/tmp-lib
   - id: build-package
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]; then
-        PACKAGE_DIR=${PWD##*/}
-        cd ../
-      else 
-        PACKAGE_DIR=${{ inputs.package-directory }}
-      fi
-      R CMD build --keep-empty-dirs --no-resave-data ${PACKAGE_DIR}
-      echo "::set-output name=pkg-tarball::$(echo ${PACKAGE_DIR}*.tar.gz)"
+      R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.pkg-dir }}
+      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.pkg-dir }}*.tar.gz)"
     shell: bash
+    working-directory: ${{ steps.find-working-dir.working-dir }}
   - id: check-package
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]; then
-        PACKAGE_DIR=${PWD##*/}
-        cd ../
-      else 
-        PACKAGE_DIR=${{ inputs.package-directory }}
-      fi
-      R CMD check --install=check:${PACKAGE_DIR}.install-out.txt --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
+      R CMD check --install=check:${{ steps.find-working-dir.pkg-dir }}.install-out.txt --library=${HOME}/tmp-lib --no-vignettes --timings "${{ steps.build-package.outputs.pkg-tarball }}"
     shell: bash
+    working-directory: ${{ steps.find-working-dir.working-dir }}
