@@ -10,7 +10,7 @@ runs:
   steps:
   - id: find-working-dir
     run: |
-      if [[ ${{ inputs.package-directory }} == "." ]]; then#
+      if [[ ${{ inputs.package-directory }} == "." ]]; then
         echo "Option 1"
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
