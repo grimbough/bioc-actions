@@ -5,9 +5,6 @@ inputs:
     required: false
     default: '.'
 
-env:
-  TMP_LIB: ${HOME}/tmp-lib
-
 runs:
   using: "composite"
   steps:
@@ -20,7 +17,7 @@ runs:
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
-      mkdir -p ${TMP_LIB}
+      mkdir -p "${HOME}/tmp-lib"
     shell: bash
   - id: build-package
     run: |
@@ -30,6 +27,6 @@ runs:
     working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${TMP_LIB} --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library="${HOME}/tmp-lib" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
