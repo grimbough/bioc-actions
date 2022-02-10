@@ -5,6 +5,9 @@ inputs:
     required: false
     default: '.'
 
+env:
+  TMP_LIB: ${HOME}/tmp-lib
+
 runs:
   using: "composite"
   steps:
@@ -17,15 +20,16 @@ runs:
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo ${PWD})"
       fi
+      mkdir -p ${TMP_LIB}
     shell: bash
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
       echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-dir }}*.tar.gz)"
     shell: bash
-    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
+    working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${R_LIBS_USER} --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library=${TMP_LIB} --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
-    working-directory: ${{ steps.find-working-dir.working-dir }}
+    working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
