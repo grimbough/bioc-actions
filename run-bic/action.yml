@@ -15,12 +15,12 @@ runs:
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
       else
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
-        echo "::set-output name=working-dir::$(echo "${PWD}")"
+        echo '::set-output name=working-dir::$(echo "${PWD}")'
       fi
     shell: bash
   - id: install-package
     run: |
-      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }}
+      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} > ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: build-package
