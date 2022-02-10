@@ -31,6 +31,6 @@ runs:
     working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library="${R_USER_LIB}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
