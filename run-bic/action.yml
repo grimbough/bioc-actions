@@ -12,10 +12,10 @@ runs:
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
-        echo "::set-output name=working-dir::$(echo ${PWD%/*})"
+        echo "::set-output name=working-dir::$(echo '../')"
       else
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
-        echo "::set-output name=working-dir::$(echo \"${PWD}\")"
+        echo "::set-output name=working-dir::$(echo './')"
       fi
     shell: bash
   - id: install-package
