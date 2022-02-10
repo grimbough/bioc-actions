@@ -15,7 +15,7 @@ runs:
         echo "::set-output name=working-dir::$(echo ${PWD%/*})"
       else
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
-        echo "::set-output name=working-dir::$(echo '${PWD}')"
+        echo "::set-output name=working-dir::$(echo "${PWD}")"
       fi
     shell: bash
   - id: install-package
