@@ -19,6 +19,7 @@ runs:
   - name: Install latex fonts
     run: |
       tlmgr update --self && tlmgr install courier
+    shell: bash
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
