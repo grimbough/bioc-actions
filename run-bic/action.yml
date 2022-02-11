@@ -1,13 +1,24 @@
-name: 'Build, Check, and Install'
+name: 'Install, Build, Check'
+author: Mike L. Smith
 inputs:
   package-directory:
-    description: '.'
+    description: 'Path to the package directory.  The default value of `.` assumes the git repository is the package. Provide a path if the package is located in a sub-folder.'
     required: false
     default: '.'
-
+outputs:
+  source-tarball:
+    description: ''
+    value: ${{ steps.build-package.outputs.pkg-tarball }}
+  check-dir:
+    description: ''
+    value: ${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
 runs:
   using: "composite"
   steps:
+  - uses: r-lib/actions/setup-tinytex@v2
+  - name: Install latex fonts
+    run: |
+      tlmgr update --self && tlmgr install courier
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
@@ -29,9 +40,16 @@ runs:
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
       echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-dir }}*.tar.gz)"
     shell: bash
-    working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
+    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: check-package
     run: |
       R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
-    working-directory: "${{ steps.find-working-dir.outputs.working-dir }}"
+    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
+  - id: build-binary
+    run: |
+        rm -rf ${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir 
+        mkdir ${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir 
+        R CMD INSTALL --build --library=rhdf5.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
+    shell: bash
+    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
