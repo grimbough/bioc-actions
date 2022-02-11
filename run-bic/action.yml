@@ -20,7 +20,8 @@ runs:
     shell: bash
   - id: install-package
     run: |
-      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} > ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
+      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
+      cat ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: build-package
