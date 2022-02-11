@@ -49,8 +49,7 @@ runs:
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: build-binary
     run: |
-        rm -rf ${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir 
         mkdir ${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir 
-        R CMD INSTALL --build --library=rhdf5.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
+        R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
