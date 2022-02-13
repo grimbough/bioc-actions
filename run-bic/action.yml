@@ -15,10 +15,14 @@ outputs:
 runs:
   using: "composite"
   steps:
-  - uses: r-lib/actions/setup-tinytex@v2
+  - name: Install TinyTex
+    uses: r-lib/actions/setup-tinytex@v2
   - name: Install latex fonts
     run: |
-      tlmgr update --self && tlmgr install courier
+      tlmgr update --self
+  - name: Install latex fonts
+    run: |
+      tlmgr install courier
     shell: bash
   - id: find-working-dir
     run: |
