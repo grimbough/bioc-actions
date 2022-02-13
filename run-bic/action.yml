@@ -19,6 +19,7 @@ runs:
     uses: r-lib/actions/setup-tinytex@v2
   - name: Install latex fonts
     run: |
+      echo ${PATH}
       tlmgr update --self
   - name: Install latex fonts
     run: |
