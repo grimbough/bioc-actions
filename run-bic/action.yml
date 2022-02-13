@@ -20,6 +20,7 @@ runs:
   - name: Install latex fonts
     run: |
       echo ${PATH}
+      ls -l /c/Users/runneradmin/AppData/Roaming/TinyTeX/bin/win32
       tlmgr update --self
     shell: bash
   - name: Install latex fonts
