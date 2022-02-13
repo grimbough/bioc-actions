@@ -21,6 +21,7 @@ runs:
     run: |
       echo ${PATH}
       tlmgr update --self
+    shell: bash
   - name: Install latex fonts
     run: |
       tlmgr install courier
