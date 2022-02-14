@@ -28,7 +28,8 @@ runs:
   - id: testing
     run: |
       echo ${PATH}
-      Rscript -e 'Sys.getenv("R_ZIPCMD")'
+      ls /usr/bin
+      Rscript -e 'Sys.getenv()'
     shell: bash
     
   - id: find-working-dir
