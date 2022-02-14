@@ -28,9 +28,11 @@ runs:
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
+        echo "::set-output name=pkg-name::$(echo ${PWD##*/})"
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
         echo "::set-output name=working-dir::$(echo '../')"
       else
+        echo "::set-output name=pkg-name::$(basename ${{ inputs.package-directory }})
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo './')"
       fi
@@ -38,27 +40,27 @@ runs:
     
   - id: install-package
     run: |
-      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
-      cat ${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt
+      R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
+      cat ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
-      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-dir }}_*.tar.gz)"
+      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-name }}_*.tar.gz)"
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-dir }}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt --library="${R_LIBS_USER}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
   - id: build-binary
     run: |
-        mkdir ${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir 
-        R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-dir }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
+        mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
+        R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
     shell: pwsh
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
