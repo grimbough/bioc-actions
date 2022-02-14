@@ -46,7 +46,7 @@ runs:
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
-      echo "::set-output name=pkg-tarball::$(basename $(echo(${{ steps.find-working-dir.outputs.pkg-dir }}_*.tar.gz)))"
+      echo "::set-output name=pkg-tarball::$(basename $(echo (${{ steps.find-working-dir.outputs.pkg-dir }}_*.tar.gz)))"
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
