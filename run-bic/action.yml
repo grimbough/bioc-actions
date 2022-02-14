@@ -19,14 +19,8 @@ runs:
     uses: r-lib/actions/setup-tinytex@v2
   - name: Install latex fonts
     run: |
-      echo ${PATH}
-      ls -l /c/Users/runneradmin/AppData/Roaming/TinyTeX/bin/win32
-      tlmgr update --self
-    shell: bash
-  - name: Install latex fonts
-    run: |
-      tlmgr install courier
-    shell: bash
+      tlmgr update --self && tlmgr install courier
+    shell: pwsh
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
