@@ -62,5 +62,5 @@ runs:
     run: |
         mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
         R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
-    shell: pwsh
+    shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
