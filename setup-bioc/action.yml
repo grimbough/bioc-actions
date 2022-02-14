@@ -36,7 +36,3 @@ runs:
       install.packages(c("BiocManager", "remotes"))
       BiocManager::install(version = "${{ steps.find-r-version.outputs.bioc-version }}" )
     shell: Rscript {0}
-  - run: |
-      Sys.getenv()
-    shell: Rscript {0}
-    

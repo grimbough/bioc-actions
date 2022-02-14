@@ -5,6 +5,7 @@ inputs:
     description: 'Path to the package directory.  The default value of `.` assumes the git repository is the package. Provide a path if the package is located in a sub-folder.'
     required: false
     default: '.'
+    
 outputs:
   source-tarball:
     description: ''
@@ -12,6 +13,7 @@ outputs:
   check-dir:
     description: ''
     value: ${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
+    
 runs:
   using: "composite"
   steps:
@@ -40,7 +42,7 @@ runs:
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
-      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-dir }}*.tar.gz)"
+      echo "::set-output name=pkg-tarball::$(basename ${{ steps.find-working-dir.outputs.pkg-dir }}*.tar.gz)"
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
   - id: check-package
