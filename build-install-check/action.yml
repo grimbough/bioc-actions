@@ -32,7 +32,7 @@ runs:
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
         echo "::set-output name=working-dir::$(echo '../')"
       else
-        echo "::set-output name=pkg-name::$(basename ${{ inputs.package-directory }})
+        echo "::set-output name=pkg-name::$(basename ${{ inputs.package-directory }})"
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
         echo "::set-output name=working-dir::$(echo './')"
       fi
