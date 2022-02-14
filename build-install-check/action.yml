@@ -25,6 +25,12 @@ runs:
       tlmgr update --self && tlmgr install courier
     shell: pwsh
     
+  - id: testing
+    run: |
+      echo ${PATH}
+      Rscript -e 'Sys.getenv("R_ZIPCMD")'
+    shell: bash
+    
   - id: find-working-dir
     run: |
       if [[ ${{ inputs.package-directory }} == "." ]]; then
