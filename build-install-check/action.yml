@@ -12,8 +12,8 @@ outputs:
     value: ${{ steps.return-paths.outputs.pkg-tarball }}
   check-dir:
     description: ''
-    value: ${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
-    
+    value: ${{ steps.return-paths.outputs.check-dir }}
+
 runs:
   using: "composite"
   steps:
@@ -60,17 +60,23 @@ runs:
     
   - id: build-binary
     run: |
+      if [[ ${RUNNER_OS} == "Windows" ]]; then
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
         export PATH
-        mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
-        R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
+      fi;
+      mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
+      R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
 
   - id: return-paths
     run: |
-      TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}'))")
+      TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.build-package.outputs.pkg-tarball }}'))")
+      echo "${TARBALL}"
+      CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
+      echo "${CHECKDIR}"
       echo "::set-output name=pkg-tarball::$(echo $TARBALL)"
+      echo "::set-output name=check-dir::$(echo $CHECKDIR)"
     shell: bash
     
