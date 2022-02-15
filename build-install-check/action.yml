@@ -30,11 +30,11 @@ runs:
       if [[ ${{ inputs.package-directory }} == "." ]]; then
         echo "::set-output name=pkg-name::$(echo ${PWD##*/})"
         echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
-        echo "::set-output name=working-dir::$(echo '../')"
+        echo "::set-output name=working-dir::$(realpath '../')"
       else
         echo "::set-output name=pkg-name::$(basename ${{ inputs.package-directory }})"
         echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
-        echo "::set-output name=working-dir::$(echo './')"
+        echo "::set-output name=working-dir::$(realpath './')"
       fi
     shell: bash
     
