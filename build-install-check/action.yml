@@ -9,10 +9,10 @@ inputs:
 outputs:
   source-tarball:
     description: ''
-    value: ${{ steps.build-package.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}
+    value: ${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}
   check-dir:
     description: ''
-    value: ${{ steps.build-package.outputs.working-dir }}/${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
+    value: ${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
     
 runs:
   using: "composite"
@@ -24,12 +24,6 @@ runs:
     run: |
       tlmgr update --self && tlmgr install courier
     shell: pwsh
-    
-  - id: testing
-    run: |
-      echo ${PATH}
-      Rscript -e "Sys.getenv('RTOOLS40_HOME')"
-    shell: bash
   
   - id: find-working-dir
     run: |
@@ -66,8 +60,9 @@ runs:
     
   - id: build-binary
     run: |
-        export PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
-        echo $PATH
+        PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
+        PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
+        export PATH
         mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
         R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
