@@ -29,6 +29,7 @@ runs:
     run: |
       echo ${PATH}
       Rscript -e "Sys.getenv('RTOOLS40_HOME')"
+      ls -l /c/rtools40/usr/bin
     shell: bash
   
   - id: find-working-dir
@@ -66,7 +67,7 @@ runs:
     
   - id: build-binary
     run: |
-        export PATH=${PATH}:$(Rscript -e "cat(Sys.getenv('RTOOLS40_HOME'), 'usr/bin/', sep='/')")
+        export PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
         echo $PATH
         mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
         R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
