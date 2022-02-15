@@ -9,10 +9,10 @@ inputs:
 outputs:
   source-tarball:
     description: ''
-    value: ${{ steps.build-package.outputs.pkg-tarball }}
+    value: ${{ steps.build-package.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}
   check-dir:
     description: ''
-    value: ${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
+    value: ${{ steps.build-package.outputs.working-dir }}/${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
     
 runs:
   using: "composite"
