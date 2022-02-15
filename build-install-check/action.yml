@@ -9,7 +9,7 @@ inputs:
 outputs:
   source-tarball:
     description: ''
-    value: ${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}
+    value: ${{ steps.return-paths.outputs.pkg-tarball }}
   check-dir:
     description: ''
     value: ${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
@@ -67,3 +67,10 @@ runs:
         R CMD INSTALL --build --library=${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
+
+  - id: return-paths
+    run: |
+      TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}/${{ steps.build-package.outputs.pkg-tarball }}'))")
+      echo "::set-output name=pkg-tarball::$(echo $TARBALL)"
+    shell: bash
+    
