@@ -22,7 +22,7 @@ In the simplest case, where the root of the repsoitory of our package folder, we
   uses: grimbough/bioc-actions/build-install-check@v0
 ```
 
-He we probide the path to a package in a sub-folder.  We can also give the step an `id` so that the outputs can be references by further steps in a larger workflow.
+He we provide the path to a package in a sub-folder.  We can also give the step an `id` so that the output variables can be referenced by further steps in a larger workflow.
 
 ```yaml
 - name: Build, Install, Check
