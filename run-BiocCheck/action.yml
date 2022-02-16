@@ -1,6 +1,6 @@
 name: 'Run BiocCheck'
 inputs:
-  working-directory:
+  package-directory:
     description: 'Specify the location of the package to check if it is not in the working directory.'
     required: false
     default: '.'
@@ -19,9 +19,14 @@ runs:
       if: runner.os == 'Linux'
       run: sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
+    - name: Add Rtools to path
+      if: runner.os == 'Windows'
+        echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
+        echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
+      shell: bash
     - run: |
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
     - run: |
-        Rscript --vanilla "${{ github.action_path }}/run-bioc-check.R" "${{ inputs.working-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
+        Rscript --vanilla "${{ github.action_path }}/run-bioc-check.R" "${{ inputs.package-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
       shell: bash

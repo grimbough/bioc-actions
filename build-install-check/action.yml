@@ -73,9 +73,7 @@ runs:
   - id: return-paths
     run: |
       TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.build-package.outputs.pkg-tarball }}'))")
-      echo "${TARBALL}"
       CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
-      echo "${CHECKDIR}"
       echo "::set-output name=pkg-tarball::$(echo $TARBALL)"
       echo "::set-output name=check-dir::$(echo $CHECKDIR)"
     shell: bash
