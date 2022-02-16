@@ -19,17 +19,16 @@ runs:
       if: runner.os == 'Linux'
       run: sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
-    - name: Add Rtools to path
-      if: runner.os == 'Windows'
-      run: |
-        echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
-        echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
-        echo ${GITHUB_PATH}
-        echo $PATH
-      shell: bash
     - run: |
-        BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
-      shell: Rscript {0}
+        if [[ ${RUNNER_OS} == "Windows" ]]; then
+          PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
+          PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
+          export PATH
+          echo ${PATH}
+          ls /c/rtools42/usr/bin
+        fi;
+        Rscript -e BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
+      shell: bash
     - run: |
         Rscript --vanilla "${{ github.action_path }}/run-bioc-check.R" "${{ inputs.package-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
       shell: bash
