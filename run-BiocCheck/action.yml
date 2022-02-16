@@ -21,6 +21,7 @@ runs:
       shell: bash
     - name: Add Rtools to path
       if: runner.os == 'Windows'
+      run: |
         echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
         echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
       shell: bash
