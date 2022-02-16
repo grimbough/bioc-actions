@@ -21,11 +21,7 @@ runs:
       shell: bash
     - run: |
         if [[ ${RUNNER_OS} == "Windows" ]]; then
-          PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
-          PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
-          export PATH
-          echo ${PATH}
-          ls /c/rtools40/usr/bin
+          ls /c/rtools40/ucrt64/bin
         fi;
         Rscript -e "BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)"
       shell: bash
