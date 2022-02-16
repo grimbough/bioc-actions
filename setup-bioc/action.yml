@@ -8,6 +8,10 @@ inputs:
     description: ''
     required: false
     default: 'https://www.bioconductor.org'
+  rtools-version:
+    description: ''
+    required: false
+    default: 42
 runs:
   using: "composite"
   steps:
@@ -23,6 +27,7 @@ runs:
       r-version: ${{ steps.find-r-version.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
+      rtools-version: ${{ inputs.rtools-version }}
   - name: Download Renviron
     run: |
       download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
