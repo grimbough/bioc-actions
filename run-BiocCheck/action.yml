@@ -24,6 +24,8 @@ runs:
       run: |
         echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
         echo $(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')") >> $GITHUB_PATH
+        echo ${GITHUB_PATH}
+        echo $PATH
       shell: bash
     - run: |
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
