@@ -25,7 +25,7 @@ runs:
           PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
           export PATH
           echo ${PATH}
-          ls /c/rtools42/usr/bin
+          ls /c/rtools40/usr/bin
         fi;
         Rscript -e "BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)"
       shell: bash
