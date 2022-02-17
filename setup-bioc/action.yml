@@ -17,8 +17,8 @@ runs:
   steps:
   - id: find-versions
     run: |
-      RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
-      RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
+      RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
+      RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
       BIOCVERSION=`"${{ github.action_path }}/bioc-version-check.sh" ${{ inputs.bioc-version }}`
       echo "::set-output name=r-version::$(echo ${RVERSION})"
       echo "::set-output name=rtools-version::$(echo ${RVERSION})"
