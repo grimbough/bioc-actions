@@ -15,19 +15,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - id: find-r-version
+  - id: find-versions
     run: |
-      RVERSION=`"${{ github.action_path }}/bioc-to-r-map.sh" ${{ inputs.bioc-version }}`
+      RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
+      RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
       BIOCVERSION=`"${{ github.action_path }}/bioc-version-check.sh" ${{ inputs.bioc-version }}`
       echo "::set-output name=r-version::$(echo ${RVERSION})"
+      echo "::set-output name=rtools-version::$(echo ${RVERSION})"
       echo "::set-output name=bioc-version::$(echo ${BIOCVERSION})"
     shell: bash
   - uses: r-lib/actions/setup-r@v2
     with:
-      r-version: ${{ steps.find-r-version.outputs.r-version }}
+      r-version: ${{ steps.find-versions.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
-      rtools-version: ${{ inputs.rtools-version }}
+      rtools-version: ${{ steps.find-versions.outputs.r-version }}
   - name: Download Renviron
     run: |
       download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
@@ -39,5 +41,5 @@ runs:
   - name: Install and initialize BiocManager
     run: |
       install.packages(c("BiocManager", "remotes"))
-      BiocManager::install(version = "${{ steps.find-r-version.outputs.bioc-version }}" )
+      BiocManager::install(version = "${{ steps.find-versions.outputs.bioc-version }}" )
     shell: Rscript {0}
