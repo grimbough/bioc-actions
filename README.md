@@ -1,5 +1,7 @@
 # Github Actions for Bioconductor
 
+[![Top-level package repository](https://github.com/grimbough/biocActionsExamples/actions/workflows/top-level-pkg.yml/badge.svg?event=workflow_dispatch)](https://github.com/grimbough/biocActionsExamples/actions/workflows/top-level-pkg.yml)
+
 This repository holds some GitHub actions that may be useful for those developing or maintaining R packages that will be hosted by the [Bioconductor](https://www.bioconductor.org) project.  These actions are built upon the [GitHub Actions for the R language](r-lib/actions) and should be considered complementary to them.  It's also recommended to take a look at the [biocthis](https://bioconductor.org/packages/biocthis/) package, which provides templates and functions for setting up GitHub Actions workflows for Bioconductor packages.
 
 ## Actions
