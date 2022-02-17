@@ -21,9 +21,9 @@ runs:
       shell: bash
     - run: |
         if [[ ${RUNNER_OS} == "Windows" ]]; then
-          ls /c/rtools40/ucrt64/bin
+          Rscript -e "Sys.getenv()"
         fi;
-        Rscript -e "BiocManager::install('BiocCheck', quiet = FALSE, upgrade = FALSE, ask = FALSE)"
+        Rscript -e "BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)"
       shell: bash
     - run: |
         Rscript --vanilla "${{ github.action_path }}/run-bioc-check.R" "${{ inputs.package-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}

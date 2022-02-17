@@ -29,7 +29,7 @@ runs:
       r-version: ${{ steps.find-versions.outputs.r-version }}
       Ncpus: 2
       use-public-rspm: true
-      rtools-version: ${{ steps.find-versions.outputs.r-version }}
+      rtools-version: ${{ steps.find-versions.outputs.rtools-version }}
   - name: Download Renviron
     run: |
       download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
