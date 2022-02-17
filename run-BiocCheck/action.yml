@@ -20,9 +20,6 @@ runs:
       run: sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
     - run: |
-        if [[ ${RUNNER_OS} == "Windows" ]]; then
-          Rscript -e "Sys.getenv()"
-        fi;
         Rscript -e "BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)"
       shell: bash
     - run: |
