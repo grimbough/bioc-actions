@@ -2,7 +2,11 @@
 
 GitHub Action to install the appropriate version of R for a given version of Bioconductor.
 
-The action will also install the `Renviron.bioc` file used by the Bioconductor Build System to enable settings that will cause `R CMD check` to throw an error that are not activated by default.  The current version of this file for the devel branch can be found at https://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc
+## Motivation
+
+Releases of Bioconductor are tied to specific versions of R.  However, because Bioconductors' release cycle is 6 monthly and R's is annual, it can be tricky to keep GitHub Actions Workflows using the appropriate versions.  This action tries to simplify this by automatically installing the correct version of R (and Rtools) for a given Bioconductor version.
+
+The action will also install the `Renviron.bioc` file used by the Bioconductor Build System to enable settings that will cause `R CMD check` to throw an error, but which are not activated by default.  The current version of this file for the devel branch can be found at https://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc
 
 ## Inputs
 
