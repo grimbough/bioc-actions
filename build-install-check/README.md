@@ -19,15 +19,15 @@ In the simplest case, where the root of the repsoitory of our package folder, we
 
 ```yaml
 - name: Build, Install, Check
-  uses: grimbough/bioc-actions/build-install-check@v0
+  uses: grimbough/bioc-actions/build-install-check@v1
 ```
 
-He we provide the path to a package in a sub-folder.  We can also give the step an `id` so that the output variables can be referenced by further steps in a larger workflow.
+Here we provide the path to a package in a sub-folder.  We can also give the step an `id` so that the output variables can be referenced by further steps in a larger workflow.
 
 ```yaml
 - name: Build, Install, Check
   id: build-install-check
-  uses: grimbough/bioc-actions/build-install-check@v0
+  uses: grimbough/bioc-actions/build-install-check@v1
   with:
     package-directory: 'inst/nestedPKG'
 ```

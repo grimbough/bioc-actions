@@ -17,7 +17,7 @@ The action will also install the `Renviron.bioc` file used by the Bioconductor B
 
 ```yaml
 - name: Setup R and Bioconductor
-  uses: grimbough/bioc-actions/setup-bioc@v0
+  uses: grimbough/bioc-actions/setup-bioc@v1
   with:
     bioc-version: devel
     bioc-mirror: https://ftp.gwdg.de/pub/misc/bioconductor

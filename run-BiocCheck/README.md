@@ -14,7 +14,7 @@ The Bioconductor project has some extra checks in addition to the usual `R CMD c
 
 ```yaml
 - name: Run BiocCheck
-  uses: grimbough/bioc-actions/run-bioc-check@v0
+  uses: grimbough/bioc-actions/run-bioc-check@v1
   with:
     working-directory: examplePKG
     error-on: 'never'
