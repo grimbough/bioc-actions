@@ -1,0 +1,18 @@
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+   
+name: trigger-test-workflows
+
+jobs:
+  trigger-tests:
+    runs-on: ubuntu-20.04
+    
+    steps:
+    - name: Trigger example package build
+      env:
+        TOKEN: ${{ secrets.MY_TOKEN }}
+      run: |
+        curl -X POST -H "Authorization: token $TOKEN" "https://api.github.com/repos/grimbough/biocActionsExamples/actions/workflows/dispatches" -d '{"ref":"main"}'
