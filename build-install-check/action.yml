@@ -60,6 +60,7 @@ runs:
     
   - id: build-binary
     run: |
+      ## Add rtools/usr/bin so the "zip" command is found
       if [[ ${RUNNER_OS} == "Windows" ]]; then
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
