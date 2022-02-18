@@ -8,14 +8,16 @@ Run the `R CMD INSTALL`, `R CMD build`, `R CMD check` sequence using the strateg
 
 ## Outputs
 
-This action will return the absolute paths to several of the files or folders produced during workflow.  These can then be passed to action like [`upload-artifact`](https://github.com/actions/upload-artifact) to make the output available for inspection.
+This action will return the absolute paths to several of the files or folders produced during workflow.  These can then be passed to actions like [`upload-artifact`](https://github.com/actions/upload-artifact) to make the output available for inspection.
 
 - `source-tarball`: The `<pkgname>_x.y.z.tar.gz` file produced by the call the `R CMD build`.
 - `check-dir`: The `<pkgname>.Rcheck` folder containing various check logs.  `R CMD check` failures are often accompanied by an instruction to examine one or more files in this directory.
 
 ## Example usage
 
-In the simplest case, where the root of the repsoitory of our package folder, we can use the action like this:
+This action assumes you have R installed on the runner (for Windows Rtools).  It is recommended to use [bioc-actions/setup-bioc](https://github.com/grimbough/bioc-actions/tree/v1/setup-bioc) or [r-lib/actions/setup-r](https://github.com/r-lib/actions/tree/v2/setup-r) to install these, although the default installation of R on the Github hosted runners may be sufficient in some circumstances. 
+
+In the simplest case, where the root of the repository of our package folder, we can use the action like this:
 
 ```yaml
 - name: Build, Install, Check

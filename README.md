@@ -8,9 +8,9 @@ This repository holds some GitHub actions that may be useful for those developin
 
 The actions currently hosted here are:
 
-- [bioc-actions/setup-bioc](https://github.com/grimbough/bioc-actions/tree/main/setup-bioc) - Given a version of Bioconductor, this action installs the appropriate version of R and initialises the [BiocManager](https://cran.r-project.org/package=BiocManager) package.
-- [bioc-actions/run-BiocCheck](https://github.com/grimbough/bioc-actions/tree/main/run-BiocCheck) - Runs `BiocCheck::BiocCheck()` on a given package directory.
-- [bioc-actions/build-install-check](https://github.com/grimbough/bioc-actions/tree/main/build-install-check) - Build, install, and check a package emulating the process used by the Bioconductor Build System.
+- [bioc-actions/setup-bioc](https://github.com/grimbough/bioc-actions/tree/v1/setup-bioc) - Given a version of Bioconductor, this action installs the appropriate version of R and initialises the [BiocManager](https://cran.r-project.org/package=BiocManager) package.
+- [bioc-actions/run-BiocCheck](https://github.com/grimbough/bioc-actions/tree/v1/run-BiocCheck) - Runs `BiocCheck::BiocCheck()` on a given package directory.
+- [bioc-actions/build-install-check](https://github.com/grimbough/bioc-actions/tree/v1/build-install-check) - Build, install, and check a package emulating the process used by the Bioconductor Build System.
 
 ## Examples
 
