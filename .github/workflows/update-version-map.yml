@@ -7,7 +7,7 @@ on:
 name: Update Version Map
 
 env:
-  R_LIBS_USER: ${{ env.RUNNER_TEMP }}
+  R_LIBS_USER: /ci/lib
 
 jobs:
   update-map:
