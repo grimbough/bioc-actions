@@ -7,7 +7,7 @@ on:
 name: Update Version Map
 
 env:
-  R_LIBS_USER: ${{ runner.temp }}/R-lib
+  R_LIBS_USER: /tmp/R-lib
 
 jobs:
   update-map:
