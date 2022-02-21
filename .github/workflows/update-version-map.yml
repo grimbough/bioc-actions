@@ -20,6 +20,6 @@ jobs:
       shell: Rscript{0}
       
     - name: Run update
-      run: ${{ GITHUB_WORKSPACE }}/setup-bioc/create-version-map.R
+      run: ${{ env.GITHUB_WORKSPACE }}/setup-bioc/create-version-map.R
       shell: Rscript {0}
-      working-dir: ${{ GITHUB_WORKSPACE }}/setup-bioc
+      working-dir: ${{ env.GITHUB_WORKSPACE }}/setup-bioc
