@@ -6,12 +6,14 @@ on:
    
 name: Update Version Map
 
-env:
-  R_LIBS_USER: /tmp/R-lib
+
 
 jobs:
   update-map:
     runs-on: ubuntu-20.04
+    
+    env:
+      R_LIBS_USER: ${{ runner.temp }}/R-lib
     
     steps:
     
@@ -29,6 +31,6 @@ jobs:
       shell: Rscript {0}
       
     - name: Run update
-      run: ${{ github.workspace }}/setup-bioc/create-version-map.R
-      shell: Rscript {0}
+      run: Rscript ${{ github.workspace }}/setup-bioc/create-version-map.R
+      shell: bash
       working-directory: ${{ github.workspace }}/setup-bioc
