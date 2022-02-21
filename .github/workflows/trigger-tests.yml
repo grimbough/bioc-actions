@@ -1,10 +1,10 @@
 on:
   push:
     tags:
-      - 'v1$'
+      - 'v1'
   workflow_dispatch:
    
-name: trigger-test-workflows
+name: Trigger Test Workflows
 
 jobs:
   trigger-tests:
