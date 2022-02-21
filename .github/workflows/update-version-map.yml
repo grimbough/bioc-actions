@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+  schedule:
+  # should run at midnight on the first day of each month
+    - cron:  '0 0 1 * *'
+   
+name: Update Version Map
+
+jobs:
+  update-map:
+    runs-on: ubuntu-20.04
+    
+    steps:
+
+    - name: Checkout github repo
+      uses: actions/checkout@v2
+      
+    - name: Install BiocManager
+      run: install.packages('BiocManager', repos = 'https://cran.rstudio.com/')
+      shell: Rscript{0}
+      
+    - name: Run update
+      run: ${{ GITHUB_WORKSPACE }}/setup-bioc/create-version-map.R
+      shell: Rscript {0}
+      working-dir: ${{ GITHUB_WORKSPACE }}/setup-bioc
