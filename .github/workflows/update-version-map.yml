@@ -7,7 +7,7 @@ on:
 name: Update Version Map
 
 env:
-  R_LIBS_USER: /tmp/R-lib
+  R_LIBS_USER: ${{ runner.temp }}/R-lib
 
 jobs:
   update-map:
@@ -29,6 +29,6 @@ jobs:
       shell: Rscript {0}
       
     - name: Run update
-      run: ${{ GITHUB_WORKSPACE }}/setup-bioc/create-version-map.R
+      run: ${{ github.workspace }}/setup-bioc/create-version-map.R
       shell: Rscript {0}
-      working-directory: ${{ GITHUB_WORKSPACE }}/setup-bioc
+      working-directory: ${{ github.workspace }}/setup-bioc
