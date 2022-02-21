@@ -22,4 +22,16 @@ res <- data.frame(
   rtools
 )
 
+## we need to use the word "devel" rather than specifyin a version number
+## when using r-lib/setup-r to install the devel version of R
+currentR <- readLines("https://rversions.r-pkg.org/r-release/")
+currentR <- grep("version", currentR, value = TRUE, fixed = TRUE)
+currentR <- gsub(".*version.*([0-9]\\.[0-9]+\\.[0-9]+).*", "\\1", x = currentR)
+currentR <- as.numeric_version(currentR)
+
+devel_R_idx <- which(res$r_version > currentR)
+
+res$r_version <- as.character(res$r_version)
+res$r_version[devel_R_idx] <- "devel"
+
 write.csv(x = res, file = "bioc-version-map.csv", quote = FALSE, row.names = FALSE)
