@@ -6,8 +6,6 @@ on:
    
 name: Update Version Map
 
-
-
 jobs:
   update-map:
     runs-on: ubuntu-20.04
@@ -34,7 +32,7 @@ jobs:
       shell: bash
       working-directory: ${{ github.workspace }}/setup-bioc
       
-   - name: Commit updated tables
+    - name: Commit updated version map
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
