@@ -33,3 +33,12 @@ jobs:
       run: Rscript ${{ github.workspace }}/setup-bioc/create-version-map.R
       shell: bash
       working-directory: ${{ github.workspace }}/setup-bioc
+      
+   - name: Commit updated tables
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add setup-bioc/bioc-version-map.csv
+        git commit -m "`date +%B` update" || echo "No changes to commit"
+        git push origin v1-branch || echo "No changes to commit"
+
