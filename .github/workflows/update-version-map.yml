@@ -6,6 +6,9 @@ on:
    
 name: Update Version Map
 
+env:
+  R_LIBS_USER: ${{ env.RUNNER_TEMP }}
+
 jobs:
   update-map:
     runs-on: ubuntu-20.04
