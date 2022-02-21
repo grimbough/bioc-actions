@@ -12,13 +12,12 @@ jobs:
   update-map:
     runs-on: ubuntu-20.04
     
-    env:
-      R_LIBS_USER: ${{ runner.temp }}/R-lib
-    
     steps:
     
     - name: Make library folder
-      run: mkdir -p "${{ env.R_LIBS_USER }}"
+      run: |
+        echo "R_LIBS_USER=${{ runner.temp }}/R-lib" >> $GITHUB_ENV
+        mkdir -p ${{ runner.temp }}/R-lib
       shell: bash
 
     - name: Checkout github repo
