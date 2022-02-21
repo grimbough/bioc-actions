@@ -17,7 +17,7 @@ jobs:
       
     - name: Install BiocManager
       run: install.packages('BiocManager', repos = 'https://cran.rstudio.com/')
-      shell: Rscript{0}
+      shell: Rscript {0}
       
     - name: Run update
       run: ${{ env.GITHUB_WORKSPACE }}/setup-bioc/create-version-map.R
