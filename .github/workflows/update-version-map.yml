@@ -14,12 +14,18 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
+    
+    - name: Make library folder
+      run: mkdir -p ${{ env.R_LIBS_USER }}
+      shell: bash
 
     - name: Checkout github repo
       uses: actions/checkout@v2
       
     - name: Install BiocManager
-      run: install.packages('BiocManager', repos = 'https://cran.rstudio.com/')
+      run: |
+        .libPaths()
+        install.packages('BiocManager', repos = 'https://cran.rstudio.com/')
       shell: Rscript {0}
       
     - name: Run update
