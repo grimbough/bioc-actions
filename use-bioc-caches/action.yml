@@ -8,6 +8,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - name: Install system dependencies
+    if: runner.os == 'Linux'
+    run: sudo apt-get -y -qq install libcurl4-openssl-dev
+    shell: bash
+      
   - id: set-cache-location
     run: |
       CACHE_PATH=$(Rscript -e 'tools::R_user_dir(package = "bioc_cache", which = "cache") |> cat()')
