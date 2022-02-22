@@ -17,7 +17,7 @@ runs:
   - uses: actions/cache@v2
     with:
       path: ${{ steps.set-cache-location.outputs.cache-path }}
-      key: BiocCache-${{ hashFiles( ${{ steps.set-cache-location.outputs.cache-path }} ) }}
+      key: BiocCache-${{ hashFiles('${{ steps.set-cache-location.outputs.cache-path }}') }}
       restore-keys: BiocCache-
 
   - name: Setting Enviroment Variables
