@@ -22,7 +22,7 @@ runs:
     
   - id: bioc-version
     run: |
-      BIOC_VERSION=$(Rscript -e 'BiocManager::version() |> cat()')
+      BIOC_VERSION=$(Rscript -e 'BiocManager::version() |> as.character() |>  cat()')
       echo "::set-output name=version::$(echo ${BIOC_VERSION})"
     shell: bash
     
