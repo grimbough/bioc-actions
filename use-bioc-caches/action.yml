@@ -16,15 +16,20 @@ runs:
   - id: set-cache-location
     run: |
       CACHE_PATH=$(Rscript -e 'tools::R_user_dir(package = "bioc_cache", which = "cache") |> cat()')
-      CACHE_PATH=${{ github.workspace	}}/bioc_cache
       mkdir -p ${CACHE_PATH}
       echo "::set-output name=cache-path::$(echo ${CACHE_PATH})"
+    shell: bash
+    
+  - id: bioc-version
+    run: |
+      BIOC_VERSION=$(Rscript -e 'BiocManager::version() |> cat()')
+      echo "::set-output name=version::$(echo ${BIOC_VERSION})"
     shell: bash
     
   - uses: actions/cache@v2
     with:
       path: ${{ steps.set-cache-location.outputs.cache-path }}
-      key: BiocCache-${{ hashFiles('${{ steps.set-cache-location.outputs.cache-path }}') }}
+      key: BiocCache-v${{ steps.bioc-version.outputs.version }}
       restore-keys: BiocCache-
 
   - name: Setting Enviroment Variables
