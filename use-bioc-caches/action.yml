@@ -16,6 +16,8 @@ runs:
   - id: set-cache-location
     run: |
       CACHE_PATH=$(Rscript -e 'tools::R_user_dir(package = "bioc_cache", which = "cache") |> cat()')
+      CACHE_PATH=${{ github.workspace	}}/bioc_cache
+      mkdir -p ${CACHE_PATH}
       echo "::set-output name=cache-path::$(echo ${CACHE_PATH})"
     shell: bash
     
@@ -27,6 +29,7 @@ runs:
 
   - name: Setting Enviroment Variables
     run: |
+      echo BFC_CACHE=${{ steps.set-cache-location.outputs.cache-path }}/BiocFileCache >> $GITHUB_ENV
       echo EXPERIMENT_HUB_CACHE=${{ steps.set-cache-location.outputs.cache-path }}/ExperimentHub >> $GITHUB_ENV
       echo ANNOTATION_HUB_CACHE=${{ steps.set-cache-location.outputs.cache-path }}/AnnotationHub >> $GITHUB_ENV
       echo BIOMART_CACHE=${{ steps.set-cache-location.outputs.cache-path }}/biomaRt >> $GITHUB_ENV
