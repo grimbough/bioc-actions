@@ -13,6 +13,9 @@ outputs:
   check-dir:
     description: ''
     value: ${{ steps.return-paths.outputs.check-dir }}
+  package-binary:
+    description: ''
+    value: ${{ steps.return-paths.outputs.pkg-binary }}
 
 runs:
   using: "composite"
