@@ -20,7 +20,7 @@ runs:
   - id: set-cache-location
     run: |
       ## determine location of caches
-      if [[ ${{ inputs.cache-directory }} == '' ]]; then
+      if [[ '${{ inputs.cache-directory }}' == '' ]]; then
         CACHE_PATH=$(Rscript -e 'cat(tools::R_user_dir(package = "bioc_cache", which = "cache"))')
       else 
         CACHE_PATH=${{ inputs.cache-directory }}
