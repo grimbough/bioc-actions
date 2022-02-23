@@ -43,7 +43,7 @@ runs:
       key: BiocCache-v${{ steps.cache-keys.outputs.bioc-version }}-${{ steps.cache-keys.outputs.date }}-${{ inputs.cache-version }}
       restore-keys: | 
         BiocCache-v${{ steps.cache-keys.outputs.bioc-version }}-${{ steps.cache-keys.outputs.date }}-
-        BiocCache-v${{ steps.bioc-version.outputs.version }}-
+        BiocCache-v${{ steps.cache-keys.outputs.bioc-version }}-
         BiocCache-
 
   - name: Setting Enviroment Variables
