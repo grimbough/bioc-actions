@@ -1,7 +1,14 @@
 name: 'Use Bioconductor Caches'
 inputs:
+  cache-version:
+    description: 'Used to invalidate the existing cache. Pass a new number and a new cache will be used.'
+    required: false
+    default: 1 
   cache-directory:
-    description: 'Path to the location of the cache folders'
+    description: |
+      Path to the location of the cache folders.  
+      Use this if you want to control where caches are created on the runner. 
+      If left blank the output from `tools::R_user_dir(package = "bioc_cache", which = "cache")` will be used.
     required: false
     default: ''
     
@@ -15,22 +22,32 @@ runs:
       
   - id: set-cache-location
     run: |
-      CACHE_PATH=$(Rscript -e 'tools::R_user_dir(package = "bioc_cache", which = "cache") |> cat()')
+      ## determine location of caches
+      if [[ ${{ inputs.cache-directory }} == '' ]]; then
+        CACHE_PATH=$(Rscript -e 'cat(tools::R_user_dir(package = "bioc_cache", which = "cache"))')
+      else 
+        CACHE_PATH=${{ inputs.cache-directory }}
+      fi
       mkdir -p ${CACHE_PATH}
       echo "::set-output name=cache-path::$(echo ${CACHE_PATH})"
     shell: bash
     
-  - id: bioc-version
+  - id: cache-keys
     run: |
-      BIOC_VERSION=$(Rscript -e 'BiocManager::version() |> as.character() |>  cat()')
-      echo "::set-output name=version::$(echo ${BIOC_VERSION})"
+      BIOC_VERSION=$(Rscript -e 'cat(as.character(BiocManager::version()))')
+      DATE=$(date --utc +%D)
+      echo "::set-output name=bioc-version::$(echo ${BIOC_VERSION})"
+      echo "::set-output name=date::$(echo ${DATE})"
     shell: bash
     
   - uses: actions/cache@v2
     with:
       path: ${{ steps.set-cache-location.outputs.cache-path }}
-      key: BiocCache-v${{ steps.bioc-version.outputs.version }}
-      restore-keys: BiocCache-
+      key: BiocCache-v${{ steps.cache-keys.outputs.bioc-version }}-${{ steps.cache-keys.outputs.date }}-${{ inputs.cache-version }}
+      restore-keys: | 
+        BiocCache-v${{ steps.cache-keys.outputs.bioc-version }}-${{ steps.cache-keys.outputs.date }}-
+        BiocCache-v${{ steps.bioc-version.outputs.version }}-
+        BiocCache-
 
   - name: Setting Enviroment Variables
     run: |
