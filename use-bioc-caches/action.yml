@@ -5,10 +5,7 @@ inputs:
     required: false
     default: 1 
   cache-directory:
-    description: |
-      Path to the location of the cache folders.  
-      Use this if you want to control where caches are created on the runner. 
-      If left blank the output from `tools::R_user_dir(package = "bioc_cache", which = "cache")` will be used.
+    description: 'Path to the location of the cache folders. Use this if you want to control where caches are created on the runner. If left blank the output from `tools::R_user_dir(package = "bioc_cache", which = "cache")` will be used.'
     required: false
     default: ''
     
