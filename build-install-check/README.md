@@ -12,6 +12,7 @@ This action will return the absolute paths to several of the files or folders pr
 
 - `source-tarball`: The `<pkgname>_x.y.z.tar.gz` file produced by the call the `R CMD build`.
 - `check-dir`: The `<pkgname>.Rcheck` folder containing various check logs.  `R CMD check` failures are often accompanied by an instruction to examine one or more files in this directory.
+- `package-binary`: The compiled, platform specific, package created by `R CMD INSTALL --build`.
 
 ## Example usage
 
