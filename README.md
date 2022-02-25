@@ -15,7 +15,7 @@ The actions currently hosted here are:
 - [bioc-actions/setup-bioc](https://github.com/grimbough/bioc-actions/tree/v1/setup-bioc) - Given a version of Bioconductor, this action installs the appropriate version of R and initialises the [BiocManager](https://cran.r-project.org/package=BiocManager) package.
 - [bioc-actions/build-install-check](https://github.com/grimbough/bioc-actions/tree/v1/build-install-check) - Build, install, and check a package emulating the process used by the Bioconductor Build System.
 - [bioc-actions/run-BiocCheck](https://github.com/grimbough/bioc-actions/tree/v1/run-BiocCheck) - Runs `BiocCheck::BiocCheck()` on a given package directory.
-- [bioc-actions/run-BiocCheck](https://github.com/grimbough/bioc-actions/tree/v1/use-bioc-caches) - Create and use a directory for caching files downloaded by Bioconductor packages between workflow runs.
+- [bioc-actions/use-bioc-caches](https://github.com/grimbough/bioc-actions/tree/v1/use-bioc-caches) - Create and use a directory for caching files downloaded by Bioconductor packages between workflow runs.
 
 ## Examples
 
