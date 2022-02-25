@@ -8,6 +8,14 @@ inputs:
     description: ''
     required: false
     default: 'https://www.bioconductor.org'
+  use-public-rspm:
+    description: 'Should public the Rstudio Package Manager be used to install pacakges.'
+    required: false
+    default: true
+  Ncpus:
+    description: 'Set the R option `Ncpus` to this value.'
+    required: false
+    default: 2
 runs:
   using: "composite"
   steps:
@@ -24,8 +32,8 @@ runs:
   - uses: r-lib/actions/setup-r@v2
     with:
       r-version: ${{ steps.find-versions.outputs.r-version }}
-      Ncpus: 2
-      use-public-rspm: true
+      Ncpus: ${{ inputs.Ncpus }}
+      use-public-rspm: ${{ inputs.use-public-rspm }}
       rtools-version: ${{ steps.find-versions.outputs.rtools-version }}
       
   - name: Download Renviron
