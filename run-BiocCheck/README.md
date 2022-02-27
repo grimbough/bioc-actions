@@ -16,7 +16,7 @@ This action assumes you have R installed on the runner.  This is true by default
 
 ```yaml
 - name: Run BiocCheck
-  uses: grimbough/bioc-actions/run-bioc-check@v1
+  uses: grimbough/bioc-actions/run-BiocCheck@v1
   with:
     working-directory: examplePKG
     error-on: 'never'
