@@ -17,13 +17,16 @@ runs:
   steps:
     - name: Install system dependencies
       if: ${{ (runner.os == 'Linux') && (env.BIOCONDUCTOR_DOCKER_VERSION == '') }}
-      run: sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
+      run: |
+        echo ${{ env.BIOCONDUCTOR_DOCKER_VERSION }}
+        sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
       
     - run: |
         if(!requireNamespace("BiocManager", quietly = TRUE)) { install.packages("BiocManager", quiet = TRUE) }
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
       shell: Rscript {0}
+      
     - run: |
         Rscript --vanilla "${GITHUB_ACTION_PATH}/run-bioc-check.R" "${{ inputs.package-directory }}" "${{ inputs.error-on }}" ${{ inputs.arguments }}
       shell: bash
