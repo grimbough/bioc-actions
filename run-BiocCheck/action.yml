@@ -17,13 +17,13 @@ runs:
   steps:
   
     - name: Test for docker
-      run: echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> ${GITHUB_ENV}
+      run: if [[ ! -z ${BIOCONDUCTOR_DOCKER_VERSION} ]]; then echo IN_BIOC_DOCKER=true >> ${GITHUB_ENV}; else IN_BIOC_DOCKER=false >> ${GITHUB_ENV}; fi
       shell: bash
   
     - name: Install system dependencies
-      if: ${{ (runner.os == 'Linux') && (env.BIOCONDUCTOR_DOCKER_VERSION == '') }}
+      if: ${{ (runner.os == 'Linux') && (env.IN_BIOC_DOCKER) }}
       run: |
-        echo ${{ env.BIOCONDUCTOR_DOCKER_VERSION }}
+        echo ${{ env.IN_BIOC_DOCKER }}
         sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
       
