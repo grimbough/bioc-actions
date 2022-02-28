@@ -16,7 +16,7 @@ runs:
   using: "composite"
   steps:
     - name: Install system dependencies
-      if: ${{ (runner.os == 'Linux') && (env.BIOCONDUCTOR_DOCKER_VERSION == '') }}
+      if: ${{ (runner.os == 'Linux') && (${BIOCONDUCTOR_DOCKER_VERSION} == '') }}
       run: |
         echo ${{ env.BIOCONDUCTOR_DOCKER_VERSION }}
         sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
