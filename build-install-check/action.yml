@@ -20,10 +20,21 @@ outputs:
 runs:
   using: "composite"
   steps:
+  
+  - name: Test for latex installation
+    run: |
+      if ! command -v pdflatex &> /dev/null
+      then
+        echo "LATEX_NEEDED=${{ true }}" >> ${GITHUB_ENV}
+      fi
+    shell: bash
+  
   - name: Install TinyTex
+    if: ${{ env.LATEX_NEEDED }}
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
+    if: runner.os == "Windows"
     run: |
       tlmgr update --self && tlmgr install courier makeindex
     shell: pwsh
