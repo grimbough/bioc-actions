@@ -34,7 +34,7 @@ runs:
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
-    if: runner.os == "Windows"
+    if: runner.os == 'Windows'
     run: |
       tlmgr update --self && tlmgr install courier makeindex
     shell: pwsh
