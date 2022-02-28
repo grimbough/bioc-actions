@@ -21,16 +21,28 @@ runs:
   using: "composite"
   steps:
   
+  - name: Test for docker
+    run: |
+      ## Test whether we're in a Bioc Docker Container
+      if [[ ! -z ${BIOCONDUCTOR_DOCKER_VERSION} ]]; then 
+        echo IN_BIOC_DOCKER=true >> ${GITHUB_ENV}; 
+        ## not sure why the docker image needs this.  Maybe do elsewhere.
+        sudo apt-get update
+      else 
+        echo IN_BIOC_DOCKER=false >> ${GITHUB_ENV}; 
+      fi
+    shell: bash
+  
   - name: Test for latex installation
     run: |
       if ! command -v pdflatex &> /dev/null
       then
-        echo "LATEX_NEEDED=${{ true }}" >> ${GITHUB_ENV}
+        echo "LATEX_NEEDED=true" >> ${GITHUB_ENV}
       fi
     shell: bash
   
   - name: Install TinyTex
-    if: ${{ env.LATEX_NEEDED }}
+    if: ${{ env.LATEX_NEEDED == true }}
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
