@@ -26,8 +26,8 @@ runs:
       ## Test whether we're in a Bioc Docker Container
       if [[ ! -z ${BIOCONDUCTOR_DOCKER_VERSION} ]]; then 
         echo IN_BIOC_DOCKER=true >> ${GITHUB_ENV}; 
-        ## not sure why the docker image needs this.  Maybe do elsewhere.
-        sudo apt-get update
+        ## not sure why the docker image needs this update.  Maybe do elsewhere.
+        sudo apt-get -qq update
       else 
         echo IN_BIOC_DOCKER=false >> ${GITHUB_ENV}; 
       fi
@@ -76,6 +76,8 @@ runs:
     
   - id: install-package
     run: |
+      echo ${R_LIBS_USER}
+      ls -l ${R_LIBS_USER}
       R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
       cat ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
