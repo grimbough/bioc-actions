@@ -42,7 +42,7 @@ runs:
     shell: bash
   
   - name: Install TinyTex
-    if: ${{ env.LATEX_NEEDED == true }}
+    #if: ${{ env.LATEX_NEEDED == true }}
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
