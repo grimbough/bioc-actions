@@ -67,7 +67,8 @@ runs:
   - id: set-r-libs-user
     run: |
       if [[ -z ${R_LIBS_USER} ]]; then 
-        echo R_LIBS_USER="${{ env.RUNNER_TEMP }}/r-lib" >> ${GITHUB_ENV}
+        R_LIBS_USER=${{ runner.temp }}/R-lib
+        echo R_LIBS_USER="${R_LIBS_USER}" >> ${GITHUB_ENV}
         mkdir -p ${R_LIBS_USER}
       fi
       echo "::set-output name=dir::$(echo ${R_LIBS_USER})"
