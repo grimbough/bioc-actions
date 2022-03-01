@@ -90,7 +90,7 @@ runs:
     
   - id: check-package
     run: |
-      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt --library=${{ steps.set-r-libs-user.dir }}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
+      R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt --library=${{ steps.set-r-libs-user.outputs.dir }} --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
