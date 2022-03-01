@@ -66,10 +66,8 @@ runs:
     
   - id: set-r-libs-user
     run: |
-      echo "${R_LIBS_USER}"
       if [[ -z ${R_LIBS_USER} ]]; then 
         R_LIBS_USER=${RUNNER_TEMP}/R-lib
-        echo "${R_LIBS_USER}"
         echo R_LIBS_USER="${R_LIBS_USER}" >> ${GITHUB_ENV}
         mkdir -p ${R_LIBS_USER}
       fi
@@ -78,9 +76,6 @@ runs:
     
   - id: install-package
     run: |
-      echo ${R_LIBS_USER}
-      echo ${{ env.R_LIBS_USER }}
-      ls -l ${{ env.R_LIBS_USER }}
       R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
       cat ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
