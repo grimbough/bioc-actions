@@ -10,6 +10,8 @@ map <- map[-idx_future,]
 
 bioc_version <- c(as.character(map$Bioc), 'release', 'devel')
 r_version <- c(map$R, map$R[ c(idx_release, idx_devel) ])
+bioc_version_explicit <- c(as.character(map$Bioc), 
+                           as.character(map$Bioc)[ c(idx_release, idx_devel) ])
 
 ## assign appropriate Rtools version
 rtools <- rep("35", length(r_version))
@@ -18,6 +20,7 @@ rtools[ r_version >= 4.2 ] <- "42"
                
 res <- data.frame(
   bioc_version,
+  bioc_version_explicit,
   r_version,
   rtools
 )
