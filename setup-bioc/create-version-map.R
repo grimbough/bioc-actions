@@ -24,7 +24,7 @@ res <- data.frame(
 
 ## we need to use the word "devel" rather than specifyin a version number
 ## when using r-lib/setup-r to install the devel version of R
-currentR <- readLines("https://rversions.r-pkg.org/r-release/")
+currentR <- readLines("https://api.r-hub.io/rversions/r-release", warn = FALSE)
 currentR <- grep("version", currentR, value = TRUE, fixed = TRUE)
 currentR <- gsub(".*version.*([0-9]\\.[0-9]+\\.[0-9]+).*", "\\1", x = currentR)
 currentR <- as.numeric_version(currentR)
