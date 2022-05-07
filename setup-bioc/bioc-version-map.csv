@@ -33,7 +33,7 @@ bioc_version,r_version,rtools
 3.12,4.0,40
 3.13,4.1,40
 3.14,4.1,40
-3.15,devel,42
-3.16,devel,42
-release,devel,42
-devel,devel,42
+3.15,4.2,42
+3.16,4.2,42
+release,4.2,42
+devel,4.2,42
