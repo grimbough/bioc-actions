@@ -9,7 +9,7 @@ inputs:
     required: false
     default: 'https://www.bioconductor.org'
   use-public-rspm:
-    description: 'Should public the Rstudio Package Manager be used to install pacakges.'
+    description: 'Should the public Rstudio Package Manager be used to install packages.'
     required: false
     default: true
   Ncpus:
@@ -23,7 +23,7 @@ runs:
     run: |
       RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
       RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
-      BIOCVERSION=`"${{ github.action_path }}/bioc-version-check.sh" ${{ inputs.bioc-version }}`
+      BIOCVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
       echo "::set-output name=r-version::$(echo ${RVERSION})"
       echo "::set-output name=rtools-version::$(echo ${RTOOLS})"
       echo "::set-output name=bioc-version::$(echo ${BIOCVERSION})"

@@ -23,7 +23,7 @@ if(!(bioc_version %in% version_map[[ 'bioc_version' ]])) {
   row_idx <- which(version_map[[ 'bioc_version' ]] == bioc_version)
 }
 
-## Check our selection is a valid row name
+## Check our selection is a valid column name
 if(!(selection %in% colnames(version_map))) {
   stop("Unknown selection argument: ", selection, 
        "\nValid options are: ", 
