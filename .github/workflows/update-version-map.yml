@@ -49,5 +49,3 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         branch: v1-branch
         dry-run: 'true'
-        tag: v1
-
