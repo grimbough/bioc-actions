@@ -40,7 +40,8 @@ jobs:
         git config --local user.name "GitHub Action"
         git add setup-bioc/bioc-version-map.csv
         git commit -m "`date +%B` update" || echo "No changes to commit"
-        { git push origin v1-branch && git tag -d v1 && git tag v1 && git push origin :v1 && git push origin v1 } || echo "No changes to commit"
+        git push origin v1-branch || echo "No changes to commit"
+        git tag -d v1 && git tag v1 && git push origin :v1 && git push origin v1
     
     - name: Update tag test
       uses: phish108/autotag-action@1.1.37
