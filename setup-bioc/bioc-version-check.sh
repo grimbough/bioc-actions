@@ -8,7 +8,7 @@ BIOC=$1
 
 if [[ $BIOC =~ ^3\.[0-9]{1,2}$ || $BIOC == 'devel' || $BIOC == 'release' ]]; then
   if [[ ${BIOC} == 'release' ]]; then
-    echo '3.14';
+    echo '3.15';
   else 
     echo ${BIOC};
   fi
