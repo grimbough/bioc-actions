@@ -37,12 +37,14 @@ runs:
     run: |
       if ! command -v pdflatex &> /dev/null
       then
-        echo "LATEX_NEEDED=true" >> ${GITHUB_ENV}
+        echo LATEX_NEEDED=true >> ${GITHUB_ENV};
+      else
+        echo LATEX_NEEDED=false >> ${GITHUB_ENV};
       fi
     shell: bash
   
   - name: Install TinyTex
-    #if: ${{ env.LATEX_NEEDED == true }}
+    if: ${{ env.LATEX_NEEDED == true }}
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
