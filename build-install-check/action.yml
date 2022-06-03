@@ -35,12 +35,14 @@ runs:
   
   - name: Test for latex installation
     run: |
+      echo "::group::Testing for existing latex installation"
       if ! command -v pdflatex &> /dev/null
       then
         echo LATEX_NEEDED=true >> ${GITHUB_ENV};
       else
         echo LATEX_NEEDED=false >> ${GITHUB_ENV};
       fi
+      echo "::endgroup::"
     shell: bash
   
   - name: Install TinyTex
