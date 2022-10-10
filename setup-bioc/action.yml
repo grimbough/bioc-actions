@@ -27,25 +27,26 @@ runs:
       echo "::set-output name=r-version::$(echo ${RVERSION})"
       echo "::set-output name=rtools-version::$(echo ${RTOOLS})"
       echo "::set-output name=bioc-version::$(echo ${BIOCVERSION})"
+      echo "R_BIOC_VERSION=${BIOCVERSION}" >> $GITHUB_ENV
     shell: bash
-    
+
   - uses: r-lib/actions/setup-r@v2
     with:
       r-version: ${{ steps.find-versions.outputs.r-version }}
       Ncpus: ${{ inputs.Ncpus }}
       use-public-rspm: ${{ inputs.use-public-rspm }}
       rtools-version: ${{ steps.find-versions.outputs.rtools-version }}
-      
+
   - name: Download Renviron
     run: |
       download.file('https://bioconductor.org/checkResults/${{ inputs.bioc-version }}/bioc-LATEST/Renviron.bioc', destfile = '~/.Renviron', mode = 'wb')
     shell: Rscript {0}
-    
+
   - name: Setting Bioconductor mirror
     run: |
       write('options(BioC_mirror = "${{ inputs.bioc-mirror }}")', file = '~/.Rprofile', append = TRUE)
     shell: Rscript {0}
-    
+
   - name: Install and initialize BiocManager
     run: |
       install.packages(c("BiocManager", "remotes"), quiet = TRUE)
