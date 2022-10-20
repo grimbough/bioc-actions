@@ -27,7 +27,10 @@ args_list <- as.list(rep(TRUE, length(bioccheck_args)))
 names(args_list) <- gsub(x = bioccheck_args, pattern = "--", replacement = "", fixed = TRUE)
 
 ## run BiocCheck
-check_results <- BiocCheck::BiocCheck(package = dir, checkDir = dirname(dir), debug = FALSE, args_list)
+check_results <- do.call(BiocCheck::BiocCheck, 
+                         c(list(package = dir, checkDir = dirname(dir), 
+                                debug = FALSE, callr = FALSE), 
+                           args_list))
 
 status <- switch(error_on,
                  error = length(check_results$error),
