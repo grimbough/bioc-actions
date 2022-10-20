@@ -117,9 +117,6 @@ runs:
       TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.build-package.outputs.pkg-tarball }}'))")
       CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
       BINARY=$(Rscript -e "cat(normalizePath(list.files(path = '${{ steps.find-working-dir.outputs.working-dir }}', pattern = '^${{ steps.find-working-dir.outputs.pkg-dir }}.*(zip|tgz|gnu.tar.gz)$', full.names = TRUE)))")
-      echo "::set-output name=pkg-tarball::$(echo $TARBALL)"
-      echo "::set-output name=check-dir::$(echo $CHECKDIR)"
-      echo "::set-output name=pkg-binary::$(echo $BINARY)"
       echo "pkg-tarball=$(echo $TARBALL)" >> $GITHUB_OUTPUT
       echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
       echo "pkg-binary=$(echo $BINARY)" >> $GITHUB_OUTPUT
