@@ -81,9 +81,15 @@ runs:
   - id: install-package
     run: |
       R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
-      cat ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
+    
+  - id: show-install-log
+    if: always()
+    run: |
+      cat ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
+    shell: bash
+    working-directory: ${{ steps.find-working-dir.outputs.working-dir }}    
     
   - id: build-package
     run: |
