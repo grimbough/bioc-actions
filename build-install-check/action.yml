@@ -59,13 +59,13 @@ runs:
     run: |
       ## determine the working directory
       if [[ ${{ inputs.package-directory }} == "." ]]; then
-        echo "::set-output name=pkg-name::$(echo ${PWD##*/})"
-        echo "::set-output name=pkg-dir::$(echo ${PWD##*/})"
-        echo "::set-output name=working-dir::$(echo '../')"
+        echo "pkg-name=$(echo ${PWD##*/})" >> $GITHUB_OUTPUT
+        echo "pkg-dir=$(echo ${PWD##*/})" >> $GITHUB_OUTPUT
+        echo "working-dir=$(echo '../')" >> $GITHUB_OUTPUT
       else
-        echo "::set-output name=pkg-name::$(basename ${{ inputs.package-directory }})"
-        echo "::set-output name=pkg-dir::$(echo ${{ inputs.package-directory }})"
-        echo "::set-output name=working-dir::$(echo './')"
+        echo "pkg-name=$(basename ${{ inputs.package-directory }})" >> $GITHUB_OUTPUT
+        echo "pkg-dir=$(echo ${{ inputs.package-directory }})" >> $GITHUB_OUTPUT
+        echo "working-dir=$(echo './')" >> $GITHUB_OUTPUT
       fi
     shell: bash
     
@@ -76,7 +76,7 @@ runs:
         echo R_LIBS_USER="${R_LIBS_USER}" >> ${GITHUB_ENV}
         mkdir -p ${R_LIBS_USER}
       fi
-      echo "::set-output name=dir::$(echo ${R_LIBS_USER})"
+      echo "dir=$(echo ${R_LIBS_USER})" >> $GITHUB_OUTPUT
     shell: bash
     
   - id: install-package
@@ -89,7 +89,7 @@ runs:
   - id: build-package
     run: |
       R CMD build --keep-empty-dirs --no-resave-data ${{ steps.find-working-dir.outputs.pkg-dir }}
-      echo "::set-output name=pkg-tarball::$(echo ${{ steps.find-working-dir.outputs.pkg-name }}_*.tar.gz)"
+      echo "pkg-tarball=$(echo ${{ steps.find-working-dir.outputs.pkg-name }}_*.tar.gz)" >> $GITHUB_OUTPUT
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
@@ -120,5 +120,8 @@ runs:
       echo "::set-output name=pkg-tarball::$(echo $TARBALL)"
       echo "::set-output name=check-dir::$(echo $CHECKDIR)"
       echo "::set-output name=pkg-binary::$(echo $BINARY)"
+      echo "pkg-tarball=$(echo $TARBALL)" >> $GITHUB_OUTPUT
+      echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
+      echo "pkg-binary=$(echo $BINARY)" >> $GITHUB_OUTPUT
     shell: bash
     
