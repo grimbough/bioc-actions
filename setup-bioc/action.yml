@@ -24,10 +24,11 @@ runs:
       RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
       RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
       BIOCVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
-      echo "::set-output name=r-version::$(echo ${RVERSION})"
-      echo "::set-output name=rtools-version::$(echo ${RTOOLS})"
-      echo "::set-output name=bioc-version::$(echo ${BIOCVERSION})"
+      echo "r-version=$(echo ${RVERSION})" >> $GITHUB_OUTPUT
+      echo "rtools-version=$(echo ${RTOOLS})" >> $GITHUB_OUTPUT
+      echo "bioc-version=$(echo ${BIOCVERSION})" >> $GITHUB_OUTPUT
       echo "R_BIOC_VERSION=${BIOCVERSION}" >> $GITHUB_ENV
+
     shell: bash
 
   - uses: r-lib/actions/setup-r@v2

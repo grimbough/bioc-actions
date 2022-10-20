@@ -26,15 +26,15 @@ runs:
         CACHE_PATH=${{ inputs.cache-directory }}
       fi
       mkdir -p ${CACHE_PATH}
-      echo "::set-output name=cache-path::$(echo ${CACHE_PATH})"
+      echo "cache-path=$(echo ${CACHE_PATH})" >> $GITHUB_OUTPUT
     shell: bash
     
   - id: cache-keys
     run: |
       BIOC_VERSION=$(Rscript -e 'cat(as.character(BiocManager::version()))')
       DATE=$(date --utc +%D)
-      echo "::set-output name=bioc-version::$(echo ${BIOC_VERSION})"
-      echo "::set-output name=date::$(echo ${DATE})"
+      echo "bioc-version=$(echo ${BIOC_VERSION})" >> $GITHUB_OUTPUT
+      echo "date=$(echo ${DATE})" >> $GITHUB_OUTPUT
     shell: bash
     
   - uses: actions/cache@v2
