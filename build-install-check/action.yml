@@ -35,18 +35,17 @@ runs:
   
   - name: Test for latex installation
     run: |
-      echo "::group::Testing for existing latex installation"
+      ## Testing for existing latex installation"
       if ! command -v pdflatex &> /dev/null
       then
         echo LATEX_NEEDED=true >> ${GITHUB_ENV};
       else
         echo LATEX_NEEDED=false >> ${GITHUB_ENV};
       fi
-      echo "::endgroup::"
     shell: bash
   
   - name: Install TinyTex
-    if: ${{ env.LATEX_NEEDED == true }}
+    if: env.LATEX_NEEDED == 'true'
     uses: r-lib/actions/setup-tinytex@v2
     
   - name: Install latex fonts
