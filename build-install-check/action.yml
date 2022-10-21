@@ -16,6 +16,9 @@ outputs:
   package-binary:
     description: ''
     value: ${{ steps.return-paths.outputs.pkg-binary }}
+  install-log:
+    description: ''
+    value: ${{ steps.install-package.outputs.install-log }}
 
 runs:
   using: "composite"
@@ -80,6 +83,8 @@ runs:
     
   - id: install-package
     run: |
+      INSTALL_LOG=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt'))")
+      echo "install-log=$(echo $INSTALL_LOG)" >> $GITHUB_OUTPUT
       R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
