@@ -83,7 +83,7 @@ runs:
     
   - id: install-package
     run: |
-      INSTALL_LOG=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt'))")
+      INSTALL_LOG=$(Rscript -e "cat(file.path(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}'), '${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt'))")
       echo "install-log=$(echo $INSTALL_LOG)" >> $GITHUB_OUTPUT
       R CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
