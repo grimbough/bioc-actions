@@ -48,10 +48,14 @@ runs:
       write('options(BioC_mirror = "${{ inputs.bioc-mirror }}")', file = '~/.Rprofile', append = TRUE)
     shell: Rscript {0}
 
+  - name: Setting error option
+    run: |
+      write('options(error = traceback)', file = '~/.Rprofile', append = TRUE)
+    shell: Rscript {0}
+
   - name: Install and initialize BiocManager
     run: |
       install.packages(c("BiocManager", "remotes"), quiet = FALSE)
       BiocManager:::.install
       BiocManager::install(version = "${{ steps.find-versions.outputs.bioc-version }}", ask = FALSE)
-      traceback()
     shell: Rscript {0}
