@@ -50,6 +50,8 @@ runs:
 
   - name: Install and initialize BiocManager
     run: |
-      install.packages(c("BiocManager", "remotes"), quiet = TRUE)
+      install.packages(c("BiocManager", "remotes"), quiet = FALSE)
+      BiocManager:::.install
       BiocManager::install(version = "${{ steps.find-versions.outputs.bioc-version }}", ask = FALSE)
+      traceback()
     shell: Rscript {0}
