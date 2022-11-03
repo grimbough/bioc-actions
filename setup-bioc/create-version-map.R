@@ -25,7 +25,7 @@ res <- data.frame(
   rtools
 )
 
-## we need to use the word "devel" rather than specifyin a version number
+## we need to use the word "devel" rather than specifying a version number
 ## when using r-lib/setup-r to install the devel version of R
 currentR <- readLines("https://api.r-hub.io/rversions/r-release", warn = FALSE)
 currentR <- gsub(".*version.*([0-9]\\.[0-9]+\\.[0-9]+).*", "\\1", x = currentR)
