@@ -74,6 +74,12 @@ runs:
       fi
     shell: bash
     
+  - id: return-Rcheck-path
+    run: |
+      CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
+      echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
+    shell: bash
+    
   - id: set-r-libs-user
     run: |
       if [[ -z ${R_LIBS_USER} ]]; then 
@@ -128,10 +134,8 @@ runs:
   - id: return-paths
     run: |
       TARBALL=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.build-package.outputs.pkg-tarball }}'))")
-      CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
       BINARY=$(Rscript -e "cat(normalizePath(list.files(path = '${{ steps.find-working-dir.outputs.working-dir }}', pattern = '^${{ steps.find-working-dir.outputs.pkg-dir }}.*(zip|tgz|gnu.tar.gz)$', full.names = TRUE)))")
       echo "pkg-tarball=$(echo $TARBALL)" >> $GITHUB_OUTPUT
-      echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
       echo "pkg-binary=$(echo $BINARY)" >> $GITHUB_OUTPUT
     shell: bash
     
