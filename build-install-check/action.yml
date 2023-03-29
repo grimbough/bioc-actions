@@ -110,6 +110,7 @@ runs:
     run: |
       mkdir -p ${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
       CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
+      echo $CHECKDIR
       echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
       R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt --library="${{ steps.set-r-libs-user.outputs.dir }}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
