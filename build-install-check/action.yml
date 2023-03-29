@@ -74,12 +74,6 @@ runs:
       fi
     shell: bash
     
-  - id: return-Rcheck-path
-    run: |
-      CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.working-dir }}${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
-      echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
-    shell: bash
-    
   - id: set-r-libs-user
     run: |
       if [[ -z ${R_LIBS_USER} ]]; then 
@@ -114,6 +108,9 @@ runs:
     
   - id: check-package
     run: |
+      mkdir -p ${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck
+      CHECKDIR=$(Rscript -e "cat(normalizePath('${{ steps.find-working-dir.outputs.pkg-dir }}.Rcheck'))")
+      echo "check-dir=$(echo $CHECKDIR)" >> $GITHUB_OUTPUT
       R CMD check --install=check:${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt --library="${{ steps.set-r-libs-user.outputs.dir }}" --no-vignettes --timings ${{ steps.build-package.outputs.pkg-tarball }}
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
