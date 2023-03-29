@@ -12,7 +12,7 @@ outputs:
     value: ${{ steps.return-paths.outputs.pkg-tarball }}
   check-dir:
     description: 'Path to the directory produced by running R CMD check <PKG>.  This has the name <PKG>.Rcheck.'
-    value: ${{ steps.return-paths.outputs.check-dir }}
+    value: ${{ steps.check-package.outputs.check-dir }}
   package-binary:
     description: 'Path to the package binary produced by R CMD INSTALL --build.  The file name will be dependent on the operating system of the runner.'
     value: ${{ steps.return-paths.outputs.pkg-binary }}
