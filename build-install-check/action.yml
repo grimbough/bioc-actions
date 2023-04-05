@@ -52,7 +52,7 @@ runs:
     uses: r-lib/actions/setup-tinytex@v2
     env:
       # we are waiting on a fix for tlmgr not being in the path, so use an older version
-      TINYTEX_VERSION: 2023.02
+      TINYTEX_VERSION: 2022.12
     
   - name: Install latex fonts
     if: runner.os == 'Windows'
