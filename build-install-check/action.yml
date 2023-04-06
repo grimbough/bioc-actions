@@ -51,8 +51,8 @@ runs:
     if: env.LATEX_NEEDED == 'true'
     uses: r-lib/actions/setup-tinytex@v2
     env:
-      # we are waiting on a fix for tlmgr not being in the path, so use an older version
       TINYTEX_VERSION: 2023.04
+      TINYTEX_INSTALLER: TinyTeX
     
   - name: Install latex fonts
     if: runner.os == 'Windows'
