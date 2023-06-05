@@ -57,7 +57,6 @@ runs:
   - name: Install latex fonts
     if: runner.os == 'Windows'
     run: |
-      tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2023/
       tlmgr update --self && tlmgr install courier makeindex
     shell: pwsh
   
