@@ -6,7 +6,7 @@ This repository holds some GitHub actions that may be useful for those developin
 
 The acceptance of a package to Bioconductor project, as well as continued inclusion and deployment by passing tests on it's nightly build system, involves accommodating a number of specific requirements and features that make developing for it subtly different to a CRAN package.  The actions provided here aim to simplify deploying a Github Workflow that closely matches the Bioconductor requirements.
 
-These actions are built upon the [GitHub Actions for the R language](r-lib/actions) and should be considered complementary to them.  It's also recommended to take a look at the [biocthis](https://bioconductor.org/packages/biocthis/) package, which provides templates and functions for setting up GitHub Actions workflows for Bioconductor packages.
+These actions are built upon the [GitHub Actions for the R language](https://github.com/r-lib/actions) and should be considered complementary to them.  It's also recommended to take a look at the [biocthis](https://bioconductor.org/packages/biocthis/) package, which provides templates and functions for setting up GitHub Actions workflows for Bioconductor packages.
 
 ## Actions
 
