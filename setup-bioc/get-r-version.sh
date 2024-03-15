@@ -12,14 +12,7 @@ mapping_file=`realpath $1`
 bioc_version=`echo $2 | tr '[:upper:]' '[:lower:]'`
 selection=`echo $3 | tr '[:upper:]' '[:lower:]'`
 
-echo $mapping_file
-echo $bioc_version
-echo $selection
-
-
 line=`grep ^$bioc_version, $mapping_file`
-
-echo $line
 
 if [ $selection = "bioc_version_explicit" ]; then
   result=`echo $line | cut -d, -f 2 -`
