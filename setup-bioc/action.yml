@@ -19,16 +19,26 @@ inputs:
 runs:
   using: "composite"
   steps:
+  # - id: find-versions
+  #   run: |
+  #     RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
+  #     RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
+  #     BIOCVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
+  #     echo "r-version=$(echo ${RVERSION})" >> $GITHUB_OUTPUT
+  #     echo "rtools-version=$(echo ${RTOOLS})" >> $GITHUB_OUTPUT
+  #     echo "bioc-version=$(echo ${BIOCVERSION})" >> $GITHUB_OUTPUT
+  #     echo "R_BIOC_VERSION=${BIOCVERSION}" >> $GITHUB_ENV
+  #   shell: bash
+  
   - id: find-versions
     run: |
-      RVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
-      RTOOLS=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
-      BIOCVERSION=$(Rscript "${{ github.action_path }}/get-r-version.R" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
+      RVERSION=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
+      RTOOLS=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
+      BIOCVERSION=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
       echo "r-version=$(echo ${RVERSION})" >> $GITHUB_OUTPUT
       echo "rtools-version=$(echo ${RTOOLS})" >> $GITHUB_OUTPUT
       echo "bioc-version=$(echo ${BIOCVERSION})" >> $GITHUB_OUTPUT
       echo "R_BIOC_VERSION=${BIOCVERSION}" >> $GITHUB_ENV
-
     shell: bash
 
   - uses: r-lib/actions/setup-r@v2
