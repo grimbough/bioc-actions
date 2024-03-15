@@ -15,7 +15,7 @@ inputs:
   Ncpus:
     description: 'Set the R option `Ncpus` to this value.'
     required: false
-    default: 2
+    default: 3
 runs:
   using: "composite"
   steps:
@@ -32,6 +32,7 @@ runs:
   
   - id: find-versions
     run: |
+      ls -l ${{ github.action_path }}
       RVERSION=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
       RTOOLS=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
       BIOCVERSION=$(sh "${{ github.action_path }}/get-r-version.sh" "${{ github.action_path }}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
