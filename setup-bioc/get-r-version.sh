@@ -8,7 +8,7 @@
 #   selection <- tolower( input_arguments[3] )
 # }
 
-mapping_file=`realpath $1`
+mapping_file=`readlink -f $1`
 bioc_version=`echo $2 | tr '[:upper:]' '[:lower:]'`
 selection=`echo $3 | tr '[:upper:]' '[:lower:]'`
 
