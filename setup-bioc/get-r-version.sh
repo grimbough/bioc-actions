@@ -17,7 +17,7 @@ abspath() {
     fi
 }
 
-if readlink -f $1 2>&1/dev/null; then
+if readlink -f $1 2>&1 /dev/null; then
   mapping_file=$(readlink -f $1)
 else
   mapping_file=$(abspath $1);
