@@ -1,14 +1,28 @@
-# input_arguments <- commandArgs(trailingOnly=TRUE)
-# 
-# if (length(input_arguments) != 3) {
-#   stop("Three arguments must be supplied.", call.=FALSE)
-# } else {
-#   mapping_file <- normalizePath( input_arguments[1] )
-#   bioc_version <- tolower( input_arguments[2] )
-#   selection <- tolower( input_arguments[3] )
-# }
+#!/usr/bin/env bash
 
-mapping_file=`readlink -f $1`
+abspath() {
+    if [[ -d "$1" ]]
+    then
+        pushd "$1" >/dev/null
+        pwd
+        popd >/dev/null
+    elif [[ -e "$1" ]]
+    then
+        pushd "$(dirname "$1")" >/dev/null
+        echo "$(pwd)/$(basename "$1")"
+        popd >/dev/null
+    else
+        echo "$1" does not exist! >&2
+        return 127
+    fi
+}
+
+if readlink -f $1 2>&1/dev/null; then
+  mapping_file=$(readlink -f $1)
+else
+  mapping_file=$(abspath $1);
+fi
+
 bioc_version=`echo $2 | tr '[:upper:]' '[:lower:]'`
 selection=`echo $3 | tr '[:upper:]' '[:lower:]'`
 
