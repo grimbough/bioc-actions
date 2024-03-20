@@ -13,20 +13,23 @@ abspath() {
         popd >/dev/null
     else
         echo "$1" does not exist! >&2
-        return 127
+        exit 1
     fi
 }
 
-if readlink -f $1 2>&1 /dev/null; then
-  mapping_file=$(readlink -f $1)
+mapping_file=$1
+
+if readlink -f $mapping_file &> /dev/null
+then
+  mapping_file_full=$(readlink -f $mapping_file)
 else
-  mapping_file=$(abspath $1);
+  mapping_file_full=$(abspath $mapping_file);
 fi
 
 bioc_version=`echo $2 | tr '[:upper:]' '[:lower:]'`
 selection=`echo $3 | tr '[:upper:]' '[:lower:]'`
 
-line=`grep ^$bioc_version, $mapping_file`
+line=`grep ^$bioc_version, $mapping_file_full`
 
 if [ $selection = "bioc_version_explicit" ]; then
   result=`echo $line | cut -d, -f 2 -`
