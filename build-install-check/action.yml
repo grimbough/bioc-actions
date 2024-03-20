@@ -119,9 +119,12 @@ runs:
   - id: build-binary
     run: |
       ## Add rtools/usr/bin so the "zip" command is found
+      ## Only one of these should actually add anything new to the path
       if [[ ${RUNNER_OS} == "Windows" ]]; then
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS40_HOME')), 'usr/bin/', sep='/')")
         PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS42_HOME')), 'usr/bin/', sep='/')")
+        PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS43_HOME')), 'usr/bin/', sep='/')")
+        PATH=${PATH}:$(Rscript -e "cat(gsub('C:\\\\\\\\', '/c/', Sys.getenv('RTOOLS44_HOME')), 'usr/bin/', sep='/')")
         export PATH
       fi;
       mkdir ${{ steps.find-working-dir.outputs.pkg-name }}.buildbin-libdir 
