@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 abspath() {
     if [[ -d "$1" ]]
     then

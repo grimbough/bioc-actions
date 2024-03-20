@@ -22,9 +22,9 @@ runs:
 
   - id: find-versions
     run: |
-      RVERSION=$(sh "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
-      RTOOLS=$(sh "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
-      BIOCVERSION=$(sh "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
+      RVERSION=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
+      RTOOLS=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
+      BIOCVERSION=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
       echo "r-version=$(echo ${RVERSION})" >> $GITHUB_OUTPUT
       echo "rtools-version=$(echo ${RTOOLS})" >> $GITHUB_OUTPUT
       echo "bioc-version=$(echo ${BIOCVERSION})" >> $GITHUB_OUTPUT
