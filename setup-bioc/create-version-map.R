@@ -17,7 +17,8 @@ bioc_version_explicit <- c(as.character(map$Bioc),
 rtools <- rep("35", length(r_version))
 rtools[ r_version >= 4.0 & r_version <= 4.1 ] <- "40"
 rtools[ r_version == 4.2 ] <- "42"
-rtools[ r_version >= 4.3 ] <- "43"
+rtools[ r_version == 4.3 ] <- "43"
+rtools[ r_version >= 4.4 ] <- "44"
                
 res <- data.frame(
   bioc_version,
