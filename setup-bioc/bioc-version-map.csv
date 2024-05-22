@@ -39,5 +39,5 @@ bioc_version,bioc_version_explicit,r_version,rtools
 3.18,3.18,4.3,43
 3.19,3.19,4.4,44
 3.20,3.20,4.4,44
-release,3.18,4.3,43
-devel,3.19,4.4,44
+release,3.19,4.4,44
+devel,3.20,4.4,44
