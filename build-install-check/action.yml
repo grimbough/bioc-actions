@@ -6,11 +6,11 @@ inputs:
     required: false
     default: '.'
   R-cmd:
-    description:
+    description: 'Use this option to specify an alternative name for the R command.  Useful if you have multiple versions installed and want to use something other other than "R" as the command name.'
     required: false
     default: 'R'
   Rscript-cmd:
-    description:
+    description: 'Use this option to specify an alternative name to the Rscript command.  Analogous to the R-cmd option above.'
     required: false
     default: 'Rscript'  
     
