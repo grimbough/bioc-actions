@@ -96,7 +96,7 @@ runs:
     run: |
       INSTALL_LOG=$(${{ inputs.Rscript-cmd }} -e "cat(file.path(getwd(), '${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt'))")
       echo "install-log=$(echo $INSTALL_LOG)" >> $GITHUB_OUTPUT
-      ${{ inputs.R-cmd }} CMD INSTALL ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
+      ${{ inputs.R-cmd }} CMD INSTALL --library="${{ steps.set-r-libs-user.outputs.dir }}" ${{ steps.find-working-dir.outputs.pkg-dir }} &> ${{ steps.find-working-dir.outputs.pkg-name }}.install-out.txt
     shell: bash
     working-directory: ${{ steps.find-working-dir.outputs.working-dir }}
     
