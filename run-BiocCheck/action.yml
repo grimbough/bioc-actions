@@ -32,6 +32,12 @@ runs:
         sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
       
+    - name: Install system dependencies 2
+      if: ${{ (runner.os == 'Linux') }}
+      run: |
+        sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
+      shell: bash
+      
     - run: |
         if(!requireNamespace("BiocManager", quietly = TRUE)) { install.packages("BiocManager", quiet = TRUE) }
         BiocManager::install('BiocCheck', quiet = TRUE, upgrade = FALSE, ask = FALSE)
