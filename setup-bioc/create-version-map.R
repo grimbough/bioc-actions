@@ -18,7 +18,8 @@ rtools <- rep("35", length(r_version))
 rtools[ r_version >= package_version('4.0') & r_version <= package_version('4.1') ] <- "40"
 rtools[ r_version == package_version('4.2') ] <- "42"
 rtools[ r_version == package_version('4.3') ] <- "43"
-rtools[ r_version >= package_version('4.4') ] <- "44"
+rtools[ r_version == package_version('4.4') ] <- "44"
+rtools[ r_version >= package_version('4.5') ] <- "45"
                
 res <- data.frame(
   bioc_version,
