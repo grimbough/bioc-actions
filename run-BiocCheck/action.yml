@@ -27,7 +27,7 @@ runs:
       shell: bash
   
     - name: Install system dependencies
-      if: ${{ (runner.os == 'Linux') && (env.IN_BIOC_DOCKER == false) }}
+      if: ${{ (runner.os == 'Linux') && (env.IN_BIOC_DOCKER == 'false') }}
       run: |
         sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
       shell: bash
