@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -euo pipefail
 
 if [ $# -ne 1 ]; then
@@ -6,7 +8,7 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-BIOC_VERSION="${1,,}"
+BIOC_VERSION=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
 # Validate format: must be "release", "devel", or a numeric version like "3.xy"
 if [[ ! "$BIOC_VERSION" =~ ^(release|devel|[0-9]+\.[0-9]+)$ ]]; then
