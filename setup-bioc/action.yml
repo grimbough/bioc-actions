@@ -1,4 +1,5 @@
 name: 'Setup R & Bioconductor'
+description: 'Setup R and Bioconductor for use in GitHub Actions'
 inputs:
   bioc-version:
     description: 'Version of Bioconductor'
@@ -11,23 +12,24 @@ inputs:
   use-public-rspm:
     description: 'Should the public Rstudio Package Manager be used to install packages.'
     required: false
-    default: true
+    default: 'true'
   Ncpus:
     description: 'Set the R option `Ncpus` to this value.'
     required: false
-    default: 3
+    default: '3'
 runs:
   using: "composite"
   steps:
 
   - id: find-versions
     run: |
-      RVERSION=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} r_version)
-      RTOOLS=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} rtools)
-      BIOCVERSION=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${GITHUB_ACTION_PATH}/bioc-version-map.csv" ${{ inputs.bioc-version }} bioc_version_explicit)
-      echo "r-version=$(echo ${RVERSION})" >> $GITHUB_OUTPUT
-      echo "rtools-version=$(echo ${RTOOLS})" >> $GITHUB_OUTPUT
-      echo "bioc-version=$(echo ${BIOCVERSION})" >> $GITHUB_OUTPUT
+      VERSIONS=$(bash "${GITHUB_ACTION_PATH}/get-r-version.sh" "${{ inputs.bioc-version }}")
+      RVERSION=$(echo "$VERSIONS"   | grep '^r_version='             | cut -d= -f2)
+      RTOOLS=$(echo "$VERSIONS"     | grep '^rtools='                | cut -d= -f2)
+      BIOCVERSION=$(echo "$VERSIONS"| grep '^bioc_version_explicit=' | cut -d= -f2)
+      echo "r-version=${RVERSION}" >> $GITHUB_OUTPUT
+      echo "rtools-version=${RTOOLS}" >> $GITHUB_OUTPUT
+      echo "bioc-version=${BIOCVERSION}" >> $GITHUB_OUTPUT
       echo "R_BIOC_VERSION=${BIOCVERSION}" >> $GITHUB_ENV
     shell: bash
 
